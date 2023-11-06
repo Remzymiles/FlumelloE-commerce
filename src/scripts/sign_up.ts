@@ -58,9 +58,7 @@ const handlePasswordInput: EventListener = (e: Event) => {
 // 
 
 // save user to localStorage
-const saveUserToLocalStorage = () => {
-  localStorage.setItem("user", JSON.stringify(user));
-};
+const saveUserToLocalStorage = () => {localStorage.setItem("user", JSON.stringify(user))};
 // 
 
 // input error checks
@@ -117,7 +115,7 @@ const handleLocalStorage = () => {
     window.location.href = "login.html"
     localStorage.setItem ("isUserLoggedIn", JSON.stringify(isUserLoggedIn))
   } else if (emailInputElem.value === userData().email) {
-    errorMsgElem.style.display = "block";
+    errorMsgElem.classList.add("block_elem");
   } else{
     saveUserToLocalStorage();
     window.location.href = "login.html"
@@ -137,21 +135,17 @@ const togglePasswordVisibility = () => {
   }
 };
 
-// event handlers
+// handle user details
 const handleSignUpBtn = () => {
   fnameCheck()
   lnameCheck()
   emailCheck()
   passwordCheck()
   // 
-  if (
-    fnameInputElem.value &&
+  if (fnameInputElem.value &&
     lnameInputElem.value &&
     emailInputElem.value &&
-    passwordInputElem.value
-    )
-// 
-    {
+    passwordInputElem.value){
       user = {
         firstName: fnameInput,
         lastName: lnameInput,

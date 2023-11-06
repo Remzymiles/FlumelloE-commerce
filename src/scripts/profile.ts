@@ -162,7 +162,6 @@ const handleLogout:EventListener = (e: Event):void => {
 // 
 
 
-logOutBtnElem.addEventListener("click", handleLogout);
 
 
 handleDropdownButtonStatus();
@@ -174,12 +173,12 @@ userNumber()
 
 // getting product from API
 const handleGetProductFromApi = async () => {
-
+  
   try {
     const res = await fetch(`https://dummyjson.com/products`);
     const data = await res.json();
     products = data.products;
-
+    
     displaySearchedProducts();
   } catch (error) {
     console.log(error);
@@ -189,6 +188,7 @@ const handleGetProductFromApi = async () => {
 
 
 // 
+logOutBtnElem.addEventListener("click", handleLogout);
 searchBarInputElem.addEventListener("change", handleSearchBoxInput);
 closeSearchIcon.addEventListener("click", handleClosingSearchSection);
 searchBarContainer.addEventListener("submit", handleSearchBox);

@@ -102,7 +102,7 @@ const handleClosingSearchSection: EventListener = (): void => {
 
 // displaying the searched products
 const displaySearchedProducts:Function = () => {
-  const searchInput = searchBarInputElem.value.toLowerCase();
+  const searchInput = getSearchInput.toLowerCase();
   const matchingProducts = products.filter(
     (product) =>
       product.title.toLowerCase() === searchInput ||

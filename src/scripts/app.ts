@@ -66,14 +66,13 @@ let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) ||
 
 //handle redirect if user isn't logged in
 storedUserLoginStatus === null || storedUserLoginStatus === false
-? (window.location.href = "./sign-up.html")
-: null;
+? (window.location.href = "./sign-up.html"): null;
 
 //
 
 // handle cart icon
 cartQuantity.innerHTML = addProductsToCart.length;
-addProductsToCart.length === 0 ? cartQuantity.classList.add("none_elem"): cartQuantity.classList.remove("none_elem")
+addProductsToCart.length === 0 || null ? cartQuantity.classList.add("none_elem"): cartQuantity.classList.remove("none_elem")
 // 
 
 
@@ -102,8 +101,7 @@ const handleLogout = () => {
 const handleSearchBox: EventListener = (e: Event): void => {
   e.preventDefault();
   //
-  getSearchInput
-  ? searchSectionContainer.classList.add("block_elem")
+  getSearchInput ? searchSectionContainer.classList.add("block_elem")
   : searchSectionContainer.classList.remove("block_elem")
   // 
   handleGetProductFromApi();
@@ -146,6 +144,7 @@ const displaySearchedProducts = () => {
                 <!--  -->
                 <div class="search_card_description">
                   <h4>${product.title}</h4>
+                  <h4 class= "product_id">${product.id}</h4>
                    <div class="search_card_price">
                     <span class="">₦${(product.price * 520).toLocaleString()}</span>
                     <span class="search_card_line_through">₦ ${Math.floor((product.price / (1 - (product.discountPercentage / 100)) * 520)).toLocaleString()}</span>
@@ -186,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const numSlides = slider.children.length;
   let currentSlide = 0;
 
-  function goToSlide(slideNumber) {
+  const goToSlide = (slideNumber) => {
     if (slideNumber < 0) {
       currentSlide = numSlides - 1;
     } else if (slideNumber >= numSlides) {
@@ -348,7 +347,7 @@ const ImageCardsGroupThree = () => {
 const ImageCardsGroupFour = () => {
   let imageCardHTML = "";
 
-  products.slice(13, 26).forEach((product, index) => {
+  products.slice(13, 26).forEach((product) => {
     imageCardHTML += `
       <div class="slide_card">
         <a href="product-page.html" class="click">
