@@ -121,15 +121,21 @@ const handleClosingSearchSection: EventListener = (): void => {
 };
 //
 
+
+
 // displaying the searched products
 const displaySearchedProducts = () => {
   const searchInput = searchBarInputElem.value.toLowerCase();
   const matchingProducts = products.filter(
     (product) =>
-      product.title.toLowerCase().split(" ").includes(searchInput) ||
-      product.brand.toLowerCase().split(" ").includes(searchInput) ||
-      product.category.toLowerCase().split(" ").includes(searchInput)
-  );
+    product.title.toLowerCase().split(" ").join("").includes(searchInput) ||
+    product.brand.toLowerCase().split(" ").join("").includes(searchInput) ||
+    product.category.toLowerCase().split(" ").join("").includes(searchInput)
+    );
+    console.log(products);
+    
+    
+    console.log(matchingProducts);
 
   if (matchingProducts.length > 0) {
     let showSearchProducts = "";
