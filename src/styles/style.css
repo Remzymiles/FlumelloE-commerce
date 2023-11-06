@@ -1287,7 +1287,7 @@
     padding: 9px;
     display: flex;
     justify-content: center;
-    background-color: var(--dimgrey);
+    background-color: var(--navy);
     width: 130px;
     text-align: center;
     color: var(--white) !important;
@@ -1296,7 +1296,7 @@
     transition: all 0.5s;
   }
   .order_history_view_product:hover, #clear_history:hover{
-    background: var(--lightgrey);
+    background: var(--yellow);
     color: var(--black) !important;
   }
   
