@@ -195,6 +195,7 @@ const handleProduct:Function = () => {
           };
     
           addProductsToCart.push(newProduct);
+          handleCartIcon(cartQuantity);
         } 
       } else {
         existingProduct.productQuantity = Number(productQuantityInput);
