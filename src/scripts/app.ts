@@ -31,6 +31,9 @@ import "../assets/images/tcl.jpg";
 import "../assets/images/Xiaomi.jpg";
 import { storedUserLoginStatus } from "./saveToLocalStorage";
 import { IProduct } from "./IProduct";
+import { displaySearchedProducts } from "./displaySearchFunction";
+import { handleLogout } from "./handleLogoutAndDropdownFunc";
+import { handleDropdownButtonStatus } from "./handleLogoutAndDropdownFunc";
 //
 
 
@@ -77,25 +80,9 @@ addProductsToCart.length === 0 || null ? cartQuantity.classList.add("none_elem")
 
 
 //handle dropdown links
-const handleDropdownButtonStatus = () => {
-  if (storedUserLoginStatus === true) {
-    signUpBtnElem.classList.add("none_elem")
-    logInBtnElem.classList.add("none_elem")
-  } else {
-    signUpBtnElem.classList.remove("none_elem")
-    logInBtnElem.classList.remove("none_elem")
-  }
-};
-handleDropdownButtonStatus();
+handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
 //
 
-//handle logout button
-const handleLogout = () => {
-  let isUserLoggedIn: boolean = false;
-
-  localStorage.setItem("isUserLoggedIn", JSON.stringify(isUserLoggedIn));
-};
-//
 
 // handle search box
 const handleSearchBox: EventListener = (e: Event): void => {
@@ -120,64 +107,6 @@ const handleClosingSearchSection: EventListener = (): void => {
   searchSectionContainer.classList.add("none_elem");
 };
 //
-
-
-
-// displaying the searched products
-const displaySearchedProducts = () => {
-  const searchInput = searchBarInputElem.value.toLowerCase();
-  const matchingProducts = products.filter(
-    (product) =>
-    product.title.toLowerCase().split(" ").join("").includes(searchInput) ||
-    product.brand.toLowerCase().split(" ").join("").includes(searchInput) ||
-    product.category.toLowerCase().split(" ").join("").includes(searchInput)
-    );
-    console.log(products);
-    
-    
-    console.log(matchingProducts);
-
-  if (matchingProducts.length > 0) {
-    let showSearchProducts = "";
-
-    matchingProducts.forEach((product) => {
-      showSearchProducts += `
-            <a href="product-page.html" class = "click">
-                <!--  -->
-                <div class="search_card_image">
-                  <img src="${product.images[0]}" alt=""/>
-                </div>
-                <!--  -->
-                <div class="search_card_description">
-                  <h4>${product.title}</h4>
-                  <h4 class= "product_id">${product.id}</h4>
-                   <div class="search_card_price">
-                    <span class="">₦${(product.price * 520).toLocaleString()}</span>
-                    <span class="search_card_line_through">₦ ${Math.floor((product.price / (1 - (product.discountPercentage / 100)) * 520)).toLocaleString()}</span>
-                  </div>
-                </div>
-                <!--  -->
-              </a>
-            `;
-    });
-    searchedItemsContainerElem.innerHTML = showSearchProducts;
-
-    const productCards = document.querySelectorAll(".click");
-    productCards.forEach((product) => {
-      product.addEventListener("click", () => {
-        const productId = product.querySelector(".product_id").textContent;
-        localStorage.setItem("clickedProductId", JSON.stringify(productId));
-      });
-    })  
-
-  } else {
-    searchErrorMsg.innerHTML = `<p>Opps! Product not available</p>`;
-  }
-};
-//
-
-
-
 
 
 
@@ -208,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const prevSlide = () => {
-    currentSlide--;
+    currentSlide--;  
     goToSlide(currentSlide);
   }
 
@@ -435,7 +364,12 @@ const handleGetProductFromApi = async () => {
     ImageCardsGroupTwo()
     ImageCardsGroupThree()
     ImageCardsGroupFour()
-    displaySearchedProducts();
+    displaySearchedProducts(
+      products,
+      searchBarInputElem.value.toLowerCase(),
+      searchedItemsContainerElem,
+      searchErrorMsg
+      );
 
     // 
     arrow.forEach(arrow => {

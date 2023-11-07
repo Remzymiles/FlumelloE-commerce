@@ -76,7 +76,6 @@ const passwordCheck = () => {
 };
 //
 
-// console.log(userData());
 
 
 

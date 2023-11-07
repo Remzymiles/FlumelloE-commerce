@@ -4,6 +4,7 @@ import "../assets/images/logo2.png";
 import "../assets/images/flumello_favicon.png";
 import { storedUserLoginStatus } from "./saveToLocalStorage";
 import { IProduct } from "./IProduct";
+import { displaySearchedProducts } from "./displaySearchFunction";
 // 
 
 
@@ -94,55 +95,6 @@ const handleClosingSearchSection: EventListener = (): void => {
 };
 //
 
-// displaying the searched products
-const displaySearchedProducts: Function = () => {
-  const searchInput = searchBarInputElem.value.toLowerCase();
-  const matchingProducts = products.filter(
-    (product) =>
-      product.title.toLowerCase() === searchInput ||
-      product.brand.toLowerCase() === searchInput ||
-      product.category.toLowerCase() === searchInput
-  );
-
-  if (matchingProducts.length > 0) {
-    let showSearchProducts = "";
-
-    matchingProducts.forEach((product) => {
-      showSearchProducts += `
-            <a href="product-page.html" class = "click">
-                <!--  -->
-                <div class="search_card_image">
-                  <img src="${product.images[0]}" alt=""/>
-                </div>
-                <!--  -->
-                <div class="search_card_description">
-                  <h4>${product.title}</h4>
-                  <h4 class= "product_id">${product.id}</h4>
-                   <div class="search_card_price">
-                    <span class="">₦${(product.price * 520).toLocaleString()}</span>
-                    <span class="search_card_line_through">₦${(Math.round(parseFloat((product.price * 1.324).toFixed(2)) * 520)).toLocaleString()}</span>
-                  </div>
-                </div>
-                <!--  -->
-              </a>
-            `;
-    });
-    searchedItemsContainerElem.innerHTML = showSearchProducts;
-
-    const productCards = document.querySelectorAll<HTMLAnchorElement>(".click");
-    productCards.forEach((product) => {
-      product.addEventListener("click", () => {
-        const productId = product.querySelector<HTMLHeadingElement>(".product_id").textContent;
-        localStorage.setItem("clickedProductId", JSON.stringify(productId));
-      });
-    })  
-
-  } else {
-    searchErrorMsg.innerHTML = `<p>Opps! Product not available</p>`;
-  }
-};
-//
-
 
 
 // handle history when no product is available
@@ -199,7 +151,12 @@ const handleGetProductFromApi = async () => {
     const data = await res.json();
     products = data.products;
 
-    displaySearchedProducts();
+    displaySearchedProducts(
+      products,
+      searchBarInputElem.value.toLowerCase(),
+      searchedItemsContainerElem,
+      searchErrorMsg
+      );
   } catch (error) {
     console.log(error);
   }

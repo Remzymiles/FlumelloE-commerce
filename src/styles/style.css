@@ -194,7 +194,7 @@
     background: var(--lightgrey);
     width: 100%;
     position: absolute;
-    z-index: 20;
+    z-index: 25;
     padding: 10px;
     border-radius: 0 0 10px 10px;
     min-height: 90px;
@@ -1867,7 +1867,11 @@
       margin-left: -10px;
     }
     /* landing page end */
-  
+    
+    .cart_main{
+      margin-bottom: 58px;
+    }
+
     /* product page style */
     .product_main div.image {
       width: 400px;
