@@ -51,7 +51,7 @@ const cartQuantity = document.querySelector<HTMLSpanElement>(".cart-link span");
 let products: IProduct[];
 let getSearchInput: string;
 let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
-let productQuantityInput: string;
+let productQuantityInput: string 
 //
 
 
@@ -110,6 +110,7 @@ const handleProduct:Function = () => {
   );
 
   if (matchingProduct) {
+    
     let showMatchedProducts = "";
 
     matchingProduct.forEach((product) => {
@@ -131,7 +132,7 @@ const handleProduct:Function = () => {
             </span>
             <div class="product_quantity_input">
               <label for="quantity" id="product_quantity_label">Quantity:</label>
-              <input type="number" name="quantity" id="product_quantity">
+              <input type="number" name="quantity" id="product_quantity" min="1" value="1">
             </div>
             <div class="buttons">
                 <a href="checkout.html" class="buy_now_btn">Buy Now</a>
@@ -152,6 +153,8 @@ const handleProduct:Function = () => {
     const addToCartBtnElem = document.querySelector<HTMLAnchorElement>(".add_to_cart_btn");
     const buyNowBtnElem = document.querySelector<HTMLAnchorElement>(".buy_now_btn");
 
+    productQuantityInput = productQuantity.value;
+
 
     // handle get the product quantity
     const handleGetProductQuantity: EventListener = (e: Event): void => {
@@ -168,20 +171,20 @@ const handleProduct:Function = () => {
     // 
     const handleAddToCart: EventListener = (e: Event): void => {
       if (!productQuantityInput || productQuantityInput === "0") {
-        alert("product Quantity not added!");
+        alert("Product Quantity not added!");
         return;
       }
-      
+    
       // Check if the product already exists in the cart
       const existingProduct = addProductsToCart.find(
         (product) => product.newProductId === productId
-        );
-        
-        if (!existingProduct) {
-          const productToAddToCart = products.find((product) => product.id === productId);
-          
-          if (productToAddToCart) {
-            const newProduct = {
+      );
+    
+      if (!existingProduct) {
+        const productToAddToCart = products.find((product) => product.id === productId);
+    
+        if (productToAddToCart) {
+          const newProduct = {
             newProductId: productId,
             image: productToAddToCart.images[0],
             productName: productToAddToCart.title,
@@ -190,17 +193,20 @@ const handleProduct:Function = () => {
             productDiscountPercentage: productToAddToCart.discountPercentage,
             productQuantity: Number(productQuantityInput),
           };
-          
+    
           addProductsToCart.push(newProduct);
-          localStorage.setItem("addProductsToCart", JSON.stringify(addProductsToCart));
-
-          // handle cart icon
-          handleCartIcon(cartQuantity)
-
-          
         } 
+      } else {
+        existingProduct.productQuantity = Number(productQuantityInput);
       }
+    
+      // Save the cart to localStorage
+      localStorage.setItem("addProductsToCart", JSON.stringify(addProductsToCart));
+    
+      // Handle cart icon
+      handleCartIcon(cartQuantity);
     };
+    
     // 
 
     // handle products for checkout
