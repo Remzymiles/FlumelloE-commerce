@@ -5,6 +5,9 @@ import { userData} from "./saveToLocalStorage";
 import { storedUserLoginStatus } from "./saveToLocalStorage";
 import { IProduct } from "./IProduct";
 import { displaySearchedProducts } from "./displaySearchFunction";
+import { handleLogout } from "./handleLogoutAndDropdownFunc";
+import { handleDropdownButtonStatus } from "./handleLogoutAndDropdownFunc";
+import { handleCartIcon } from "./handleLogoutAndDropdownFunc";
 // 
 
 
@@ -33,11 +36,6 @@ let products: IProduct[];
 // 
 
 
-
-// handle cart icon
-cartQuantity.innerHTML = addProductsToCart.length;
-addProductsToCart.length === 0 ? cartQuantity.classList.add("none_elem"): cartQuantity.classList.remove("none_elem")
-//
 
 
 // handling logout button
@@ -91,32 +89,17 @@ const userAddress:Function = () => {
 // 
 
 
+// handle cart icon
+handleCartIcon(cartQuantity)
+
+
 //handle dropdown links
-const handleDropdownButtonStatus:Function = () => {
-  if (storedUserLoginStatus === true) {
-    signUpBtnElem.classList.add("none_elem")
-    logInBtnElem.classList.add("none_elem")
-  } else {
-    signUpBtnElem.classList.remove("none_elem")
-    logInBtnElem.classList.remove("none_elem")
-  }
-}
+handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
+//
 
 
 
 
-//handle logout button
-const handleLogout:EventListener = (e: Event):void => {
-  let isUserLoggedIn: boolean = false;
-  
-  localStorage.setItem("isUserLoggedIn", JSON.stringify(isUserLoggedIn));
-};
-// 
-
-
-
-
-handleDropdownButtonStatus();
 
 profileName()
 userEmail()

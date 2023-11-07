@@ -5,6 +5,9 @@ import "../assets/images/flumello_favicon.png";
 import { storedUserLoginStatus } from "./saveToLocalStorage";
 import { IProduct } from "./IProduct";
 import { displaySearchedProducts } from "./displaySearchFunction";
+import { handleCartIcon } from "./handleLogoutAndDropdownFunc";
+import { handleLogout } from "./handleLogoutAndDropdownFunc";
+import { handleDropdownButtonStatus } from "./handleLogoutAndDropdownFunc";
 // 
 
 
@@ -44,13 +47,6 @@ let mobileNumberRegex: RegExp = /^(\+234|0)[789][01]\d{8}$/
 // 
 
 
-
-
-// handle cart icon
-cartQuantity.innerHTML = addProductsToCart.length;
-addProductsToCart.length === 0 ? cartQuantity.classList.add("none_elem"): cartQuantity.classList.remove("none_elem") 
-//
-
 //
 storedUserLoginStatus === null || storedUserLoginStatus === false
   ? (window.location.href = "./sign-up.html")
@@ -58,24 +54,12 @@ storedUserLoginStatus === null || storedUserLoginStatus === false
 
 //
 
+// handle cart icon
+handleCartIcon(cartQuantity)
+
+
 //handle dropdown links
-const handleDropdownButtonStatus = () => {
-  if (storedUserLoginStatus === true) {
-    signUpBtnElem.classList.add("none_elem")
-    logInBtnElem.classList.add("none_elem")
-  } else {
-    signUpBtnElem.classList.remove("none_elem")
-    logInBtnElem.classList.remove("none_elem")
-  }
-}
-handleDropdownButtonStatus();
-
-//handle logout button
-const handleLogout: EventListener = (e: Event):void => {
-  let isUserLoggedIn: boolean = false;
-
-  localStorage.setItem("isUserLoggedIn", JSON.stringify(isUserLoggedIn));
-};
+handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
 // 
 
 

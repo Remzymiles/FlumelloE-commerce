@@ -34,6 +34,7 @@ import { IProduct } from "./IProduct";
 import { displaySearchedProducts } from "./displaySearchFunction";
 import { handleLogout } from "./handleLogoutAndDropdownFunc";
 import { handleDropdownButtonStatus } from "./handleLogoutAndDropdownFunc";
+import { handleCartIcon } from "./handleLogoutAndDropdownFunc";
 //
 
 
@@ -63,7 +64,6 @@ const cartQuantity = document.querySelector<HTMLSpanElement>(".cart-link span");
 // global variables
 let getSearchInput: string;
 let products: IProduct[];
-let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
 // 
 
 
@@ -73,10 +73,9 @@ storedUserLoginStatus === null || storedUserLoginStatus === false
 
 //
 
+
 // handle cart icon
-cartQuantity.innerHTML = addProductsToCart.length;
-addProductsToCart.length === 0 || null ? cartQuantity.classList.add("none_elem"): cartQuantity.classList.remove("none_elem")
-// 
+handleCartIcon(cartQuantity)
 
 
 //handle dropdown links
