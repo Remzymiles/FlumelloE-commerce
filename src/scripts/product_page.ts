@@ -171,7 +171,7 @@ const handleProduct:Function = () => {
     // 
     const handleAddToCart: EventListener = (e: Event): void => {
       if (!productQuantityInput || productQuantityInput === "0") {
-        alert("Product Quantity not added!");
+        alert("product Quantity not added!");
         return;
       }
     
@@ -195,18 +195,20 @@ const handleProduct:Function = () => {
           };
     
           addProductsToCart.push(newProduct);
-          handleCartIcon(cartQuantity);
-        } 
+          handleCartIcon(cartQuantity); 
+        }
       } else {
         existingProduct.productQuantity = Number(productQuantityInput);
+        handleCartIcon(cartQuantity);
       }
     
       // Save the cart to localStorage
       localStorage.setItem("addProductsToCart", JSON.stringify(addProductsToCart));
     
       // Handle cart icon
-      handleCartIcon(cartQuantity);
+      handleCartIcon(cartQuantity); 
     };
+    
     
     // 
 
