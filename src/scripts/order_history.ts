@@ -24,6 +24,8 @@ const searchedItemsContainerElem = document.querySelector<HTMLDivElement>(".sear
 const searchErrorMsg = document.querySelector<HTMLDivElement>(".search_error_msg");
 const orderHistoryContainer = document.querySelector<HTMLDivElement>(".orders")
 const clearHistoryElem = document.querySelector<HTMLAnchorElement>("#clear_history")
+const clearHistoryWarningModal = document.querySelector<HTMLDivElement>(".clear_history_modal")
+const clearHistoryBtn = document.querySelector<HTMLAnchorElement>(".clear_modal a")
 // 
 
 
@@ -119,9 +121,15 @@ handleProducts()
 // 
 
 // handle clearing of order history
+const handleClearHistoryWarning:EventListener = (e: Event): void =>{
+  e.preventDefault()
+  clearHistoryWarningModal.classList.add("block_elem")
+}
 const handleClearHistory:EventListener = (e: Event): void =>{
   localStorage.removeItem("productHistory")
+
 }
+
 // 
 
 // getting product from API
@@ -153,4 +161,5 @@ logOutBtnElem.addEventListener("click", handleLogout);
 searchBarInputElem.addEventListener("change", handleSearchBoxInput);
 closeSearchIcon.addEventListener("click", handleClosingSearchSection);
 searchBarContainer.addEventListener("submit", handleSearchBox);
-clearHistoryElem.addEventListener("click", handleClearHistory)
+clearHistoryElem.addEventListener("click", handleClearHistoryWarning)
+clearHistoryBtn.addEventListener("click", handleClearHistory)

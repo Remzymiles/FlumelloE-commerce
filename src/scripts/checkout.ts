@@ -29,6 +29,8 @@ const searchedItemsContainerElem = document.querySelector<HTMLDivElement>(".sear
 const searchErrorMsg = document.querySelector<HTMLDivElement>(".search_error_msg");
 const checkoutPricingContainer = document.querySelector<HTMLDivElement>(".pricing")
 const paymentSuccessModal = document.querySelector<HTMLDivElement>(".payment_modal")
+const checkoutProductDetails = document.querySelector<HTMLDivElement>(".checkout_products")
+const checkoutProductQuantity = document.querySelector<HTMLHeadingElement>(".checkout_quantity")
 
 //
 
@@ -182,7 +184,6 @@ const calculateTotalPrice: Function = () =>{
   
 // handle display prices
 checkoutPricingContainer.innerHTML = `
-  <h1>${checkoutProducts.length} items</h1>
   <div class="checkout_order-summary checkout_subtotal">
       <p>Subtotal :</p>
       <p>₦ ${(newPrice).toLocaleString()}</p>
@@ -201,6 +202,25 @@ checkoutPricingContainer.innerHTML = `
 }
 calculateTotalPrice()
 // 
+
+// 
+checkoutProductQuantity.innerText = `${checkoutProducts.length} items`
+
+// handle product details
+const handleProductDetails = () =>{
+  
+  checkoutProducts.forEach(product =>{
+    checkoutProductDetails.innerHTML += `
+    <div class="checkout_products_details">
+    <div class="checkout_product_image"><img src="${product.checkoutImage}" alt="${product.productName}"></div>
+    <h2>${product.checkoutProductName}</h2>
+    </div>
+    `
+    console.log(product.checkoutProductName);
+    
+  })
+}
+handleProductDetails()
 
 
 // handle pay button 
