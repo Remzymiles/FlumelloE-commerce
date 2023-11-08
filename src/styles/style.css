@@ -1886,7 +1886,9 @@
     .clear_history_modal{
       height: 98%;
     }
-
+    .clear_history_modal .clear_modal{
+      transform: translateY(-10%);
+    }
     /* general footer style for media query ends here */
   }
   
@@ -2010,7 +2012,7 @@
   .clear_history_modal .clear_modal{
     top: 50%;
     width: 50%;
-    transform: translateY(-50%);
+    
   }
   .clear_history_modal .clear_modal p{
     font-size: 23px;
