@@ -110,6 +110,8 @@ const handleProduct:Function = () => {
   );
 
   if (matchingProduct) {
+     const productQuantityFromCart = addProductsToCart.find(product => product.newProductId === productId)
+     const newProductQuantity = productQuantityFromCart ? productQuantityFromCart.productQuantity : 1;
     
     let showMatchedProducts = "";
 
@@ -132,7 +134,7 @@ const handleProduct:Function = () => {
             </span>
             <div class="product_quantity_input">
               <label for="quantity" id="product_quantity_label">Quantity:</label>
-              <input type="number" name="quantity" id="product_quantity" min="1" value="1">
+              <input type="number" name="quantity" id="product_quantity" min="1" value="${newProductQuantity}">
             </div>
             <div class="buttons">
                 <a href="checkout.html" class="buy_now_btn">Buy Now</a>

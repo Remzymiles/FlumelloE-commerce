@@ -30,11 +30,12 @@ const searchErrorMsg = document.querySelector<HTMLDivElement>(".search_error_msg
 const checkoutPricingContainer = document.querySelector<HTMLDivElement>(".pricing")
 const paymentSuccessModal = document.querySelector<HTMLDivElement>(".payment_modal")
 const checkoutProductDetails = document.querySelector<HTMLDivElement>(".checkout_products")
-const checkoutProductQuantity = document.querySelector<HTMLHeadingElement>(".checkout_quantity")
+const checkoutQuantity = document.querySelector<HTMLHeadingElement>(".checkout_quantity")
 
-//
 
-// global variables
+
+
+// 
 let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
 let checkoutProducts = JSON.parse(localStorage.getItem("checkoutProducts"))
 let productHistory = JSON.parse(localStorage.getItem("productHistory")) || [];
@@ -203,12 +204,10 @@ checkoutPricingContainer.innerHTML = `
 calculateTotalPrice()
 // 
 
-// 
-checkoutProductQuantity.innerText = `${checkoutProducts.length} items`
 
 // handle product details
 const handleProductDetails = () =>{
-  
+  checkoutQuantity.innerText = `${checkoutProducts.length} items`
   checkoutProducts.forEach(product =>{
     checkoutProductDetails.innerHTML += `
     <div class="checkout_products_details">
