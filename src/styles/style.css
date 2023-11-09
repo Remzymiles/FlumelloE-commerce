@@ -1684,6 +1684,11 @@
     top: 50%;
   }
   
+  .highlight {
+    background-color: var(--yellow);
+    font-weight: 900;
+  }
+
   .error-msg div p{
     margin-bottom: 10px;
   }
