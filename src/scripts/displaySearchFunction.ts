@@ -11,9 +11,10 @@ export const displaySearchedProducts = (
 ) => {
   const matchingProducts = products.filter(
     (product) =>
-      product.title.toLowerCase().includes(userInput) ||
-      product.brand.toLowerCase().includes(userInput) ||
-      product.category.toLowerCase().includes(userInput)
+      product.title.toLowerCase().split(" ").join("").includes(userInput) ||
+      product.title.toLowerCase().split("").join("").includes(userInput) ||
+      product.brand.toLowerCase().split(" ").join("").includes(userInput) ||
+      product.category.toLowerCase().split(" ").join("").includes(userInput)
   );
 
   if (matchingProducts.length > 0) {
