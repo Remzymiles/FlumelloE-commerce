@@ -57,4 +57,3 @@ const highlightMatch = (userInput: string, text: string) => {
   const regex = new RegExp(`(${userInput})`, 'gi');
   return text.replace(regex, (match) => `<span class="highlight">${match}</span>`);
 };
-;
