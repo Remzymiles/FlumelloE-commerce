@@ -9,7 +9,7 @@ const emailInputElem = document.querySelector<HTMLInputElement>("#email");
 const passwordInputElem = document.querySelector<HTMLInputElement>("#password");
 const loginBtnElem = document.querySelector<HTMLInputElement>("#login-btn");
 const errorMsgElem = document.querySelector<HTMLParagraphElement>(".invalid-details");
-const showPasswordCheckbox = document.querySelector<HTMLInputElement>("#show-password");
+const showPasswordIcon = document.querySelector<HTMLElement>("#togglePasswordIcon")
 // 
 
 let emailInput: string;
@@ -34,13 +34,17 @@ const handlePasswordInput: EventListener = (e: Event) => {
 // 
 
 //password visibility
-const togglePasswordVisibility = () => {
-    if (passwordInputElem.type === "password") {
-      passwordInputElem.type = "text";
-    } else {
-      passwordInputElem.type = "password";
-    }
-};
+const togglePasswordVisibility:EventListener = (e:Event):void =>{
+  if (passwordInputElem.type === "password") {
+    passwordInputElem.type = "text";
+    showPasswordIcon.classList.remove("fa-eye")
+    showPasswordIcon.classList.add("fa-eye-slash")
+  } else {
+    passwordInputElem.type = "password";
+    showPasswordIcon.classList.add("fa-eye")
+    showPasswordIcon.classList.remove("fa-eye-slash")
+  }
+}
 // 
 
 // input error handling
@@ -102,6 +106,5 @@ const authenticateUser = () => {
 emailInputElem.addEventListener("input", handleEmailInput);
 passwordInputElem.addEventListener("input", handlePasswordInput);
 loginBtnElem.addEventListener("click", authenticateUser);
-showPasswordCheckbox.addEventListener("click", togglePasswordVisibility);
-  
+showPasswordIcon.addEventListener("click", togglePasswordVisibility);
 

@@ -12,7 +12,7 @@ const emailInputElem = document.querySelector<HTMLInputElement>("#email");
 const passwordInputElem = document.querySelector<HTMLInputElement>("#password");
 const signUpButtonElem = document.querySelector<HTMLButtonElement>(".sign-up");
 const errorMsgElem = document.querySelector<HTMLDivElement>(".error-msg");
-const showPasswordCheckbox = document.querySelector<HTMLInputElement>("#show-password");
+const showPasswordIcon = document.querySelector<HTMLElement>("#togglePasswordIcon");
 // 
 
 interface IUser {
@@ -127,13 +127,18 @@ const handleLocalStorage = () => {
 
 
 //password visibility
-const togglePasswordVisibility = () => {
+const togglePasswordVisibility:EventListener = (e:Event):void =>{
   if (passwordInputElem.type === "password") {
-    passwordInputElem.type = "text"; 
+    passwordInputElem.type = "text";
+    showPasswordIcon.classList.remove("fa-eye")
+    showPasswordIcon.classList.add("fa-eye-slash")
   } else {
-    passwordInputElem.type = "password"; 
+    passwordInputElem.type = "password";
+    showPasswordIcon.classList.add("fa-eye")
+    showPasswordIcon.classList.remove("fa-eye-slash")
   }
-};
+}
+// 
 
 // handle user details
 const handleSignUpBtn = () => {
@@ -175,9 +180,9 @@ const userAlreadyExisting = JSON.parse(localStorage.getItem("user"))
 
   
 //
-  fnameInputElem?.addEventListener("change", handleFnameInput);
-  lnameInputElem?.addEventListener("change", handleLnameInput);
-  emailInputElem?.addEventListener("change", handleEmailInput);
-  passwordInputElem?.addEventListener("change", handlePasswordInput);
-  showPasswordCheckbox.addEventListener('click', togglePasswordVisibility);
-  signUpButtonElem?.addEventListener("click", handleSignUpBtn);
+fnameInputElem?.addEventListener("change", handleFnameInput);
+lnameInputElem?.addEventListener("change", handleLnameInput);
+emailInputElem?.addEventListener("change", handleEmailInput);
+passwordInputElem?.addEventListener("change", handlePasswordInput);
+showPasswordIcon.addEventListener("click", togglePasswordVisibility);
+signUpButtonElem?.addEventListener("click", handleSignUpBtn);

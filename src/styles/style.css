@@ -1673,6 +1673,16 @@
     border-radius: 10px;
     padding: 20px;
   }
+  .password{
+    position: relative;
+  }
+
+  i.password-icon{
+    font-size: 20px;
+    position: absolute;
+    left: 86%;
+    top: 50%;
+  }
   
   .error-msg div p{
     margin-bottom: 10px;
