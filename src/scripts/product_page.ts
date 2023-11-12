@@ -10,7 +10,6 @@ const {
   handleLogout,
   handleDropdownButtonStatus,
   handleCartIcon,
-  cardWidth,
   handleProductCardArrows
 } = productPageImports
 
@@ -19,11 +18,7 @@ const {
   logInBtnElem ,
   logOutBtnElem,
   productDetailsContainer,
-  otherProductsContainer,
-  scrollContainer,
   loader,
-  leftArrow,
-  rightArrow,
   arrow,
   searchBarInputElem,
   searchBarContainer,
@@ -48,12 +43,10 @@ let productQuantityInput: string
 // get clicked product from local storage
 const clickedProduct = JSON.parse(localStorage.getItem("clickedProductId"));
 const productId = Number(clickedProduct);
-
 //
 
 // handle cart icon
 handleCartIcon(cartQuantity)
-
 
 //handle dropdown links
 handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);;
@@ -83,7 +76,6 @@ const handleClosingSearchSection: EventListener = (): void => {
   searchSectionContainer.classList.add("none_elem");
 };
 //
-
 
 
 // find the product that matches the id and add it to the product page
