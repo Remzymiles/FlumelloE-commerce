@@ -1,16 +1,19 @@
-import "../styles/style.css";
-import "font-awesome/css/font-awesome.css";
-import "../assets/images/logo2.png";
-import "../assets/images/flumello_favicon.png";
-import { userData } from "./saveToLocalStorage";
+import { loginHtmlElems } from "./login/loginHtmlElems";
+import { loginImports } from "./loginImports";
+
+// 
+const {
+  emailInputElem,
+  passwordInputElem,
+  loginBtnElem,
+  errorMsgElem,
+  showPasswordIcon
+} = loginHtmlElems
 // 
 
-const emailInputElem = document.querySelector<HTMLInputElement>("#email");
-const passwordInputElem = document.querySelector<HTMLInputElement>("#password");
-const loginBtnElem = document.querySelector<HTMLInputElement>("#login-btn");
-const errorMsgElem = document.querySelector<HTMLParagraphElement>(".invalid-details");
-const showPasswordIcon = document.querySelector<HTMLElement>("#togglePasswordIcon")
-// 
+const {
+  userData
+} = loginImports
 
 let emailInput: string;
 let passwordInput: string;

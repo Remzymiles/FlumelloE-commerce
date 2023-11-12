@@ -1,49 +1,39 @@
-import "../styles/style.css";
-import "font-awesome/css/font-awesome.css";
-import "../assets/images/logo2.png";
-import "../assets/images/flumello_favicon.png";
-import { storedUserLoginStatus } from "./saveToLocalStorage";
-import { displaySearchedProducts } from "./displaySearchFunction";
-import { handleLogout } from "./handleLogoutAndDropdownFunc";
-import { handleDropdownButtonStatus } from "./handleLogoutAndDropdownFunc";
-import { handleCartIcon } from "./handleLogoutAndDropdownFunc";
+import { IProduct } from "./interface/IProduct";
+import { productPageHtmlElems } from "./productPage/productPageHtmlELems";
+import { productPageImports } from "./productPageImports";
+import { handleOtherProducts } from "./productPage/otherProducts";
 //
 
-// interface
-interface IProduct {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
-}
-//
+const {
+  storedUserLoginStatus,
+  displaySearchedProducts,
+  handleLogout,
+  handleDropdownButtonStatus,
+  handleCartIcon,
+  cardWidth,
+  handleProductCardArrows
+} = productPageImports
 
+const {
+  signUpBtnElem,
+  logInBtnElem ,
+  logOutBtnElem,
+  productDetailsContainer,
+  otherProductsContainer,
+  scrollContainer,
+  loader,
+  leftArrow,
+  rightArrow,
+  arrow,
+  searchBarInputElem,
+  searchBarContainer,
+  searchSectionContainer,
+  closeSearchIcon,
+  searchedItemsContainerElem,
+  searchErrorMsg,
+  cartQuantity
+} = productPageHtmlElems
 //
-const signUpBtnElem = document.querySelector<HTMLLinkElement>(".signup-btn");
-const logInBtnElem = document.querySelector<HTMLElement>(".login-btn");
-const logOutBtnElem = document.querySelector<HTMLElement>(".logout-btn");
-const productDetailsContainer = document.querySelector<HTMLDivElement>(".matched_product");
-const productDesc = document.querySelector<HTMLDivElement>(".desc p");
-const otherProductsContainer = document.querySelector<HTMLDivElement>(".scroll_snap");
-const scrollContainer = document.querySelectorAll<HTMLDivElement>(".slide");
-const loader = document.querySelectorAll<HTMLElement>(".product_loader");
-const leftArrow = document.querySelectorAll<HTMLElement>(".scroll-left");
-const rightArrow = document.querySelectorAll<HTMLElement>(".scroll-right");
-const arrow = document.querySelectorAll<HTMLElement>("#arrow");
-const searchBarInputElem = document.querySelector<HTMLInputElement>("#search");
-const searchBarContainer = document.querySelector<HTMLFormElement>(".search_box");
-const searchSectionContainer = document.querySelector<HTMLDivElement>(".searched_item_container");
-const closeSearchIcon = document.querySelector<HTMLElement>(".close_search_icon");
-const searchedItemsContainerElem = document.querySelector<HTMLDivElement>(".search_items");
-const searchErrorMsg = document.querySelector<HTMLDivElement>(".search_error_msg");
-const cartQuantity = document.querySelector<HTMLSpanElement>(".cart-link span");
 
 //
 
@@ -58,13 +48,6 @@ let productQuantityInput: string
 // get clicked product from local storage
 const clickedProduct = JSON.parse(localStorage.getItem("clickedProductId"));
 const productId = Number(clickedProduct);
-
-//
-
-// handle redirect if user doesn't have an account
-storedUserLoginStatus === null || storedUserLoginStatus === false
-  ? (window.location.href = "./sign-up.html")
-  : null;
 
 //
 
@@ -210,9 +193,6 @@ const handleProduct:Function = () => {
       // Handle cart icon
       handleCartIcon(cartQuantity); 
     };
-    
-    
-    // 
 
     // handle products for checkout
     const handleProductsForCheckout: EventListener = (e: Event):void =>{
@@ -251,70 +231,10 @@ const handleProduct:Function = () => {
 };
 //
 
-// handle adding products from API to other products section
-const otherProducts = () => {
-  let imageCardHTML = "";
-
-  products.forEach((product) => {
-    
-    imageCardHTML += `
-      <div class="slide_card">
-        <a href="product-page.html" class="click">
-          <span class="card_discount_percent">${product.discountPercentage}%</span>
-          <div class="card_image">
-            <img src="${product.images[0]}" alt="${product.title}" />
-          </div>
-          <div class="card_description">
-            <h4 class="product_title">${product.title}</h4>
-            <h4 class= "product_id">${product.id}</h4>
-            <p class="product_remaining">${product.stock} Remaining</p>
-            <div class="card_price">
-              <p class="card_bold">₦ ${(product.price * 520).toLocaleString()}</p>
-              <p class="card_line_through">₦ ${Math.floor((product.price / (1 - (product.discountPercentage / 100)) * 520)).toLocaleString()}</p>
-            </div>
-          </div>
-        </a>
-      </div>
-    `;
-  });
-
-  otherProductsContainer.innerHTML = imageCardHTML;
-
-  const productCards = document.querySelectorAll<HTMLAnchorElement>(".click");
-  productCards.forEach((product) => {
-    product.addEventListener("click", () => {
-      const productId = product.querySelector<HTMLHeadingElement>(".product_id").textContent;
-      localStorage.setItem("clickedProductId", JSON.stringify(productId));
-    });
-  });
-};
-//
-
 // handle image card arrows
-const cardWidth = 200;
-const scrollLeft = (container) => () => {
-  container.scrollBy({
-    left: -cardWidth,
-    behavior: "smooth",
-  });
-};
-//
-const scrollRight = (container) => () => {
-  container.scrollBy({
-    left: cardWidth,
-    behavior: "smooth",
-  });
-};
-
-for (let i = 0; i < leftArrow.length; i++) {
-  leftArrow[i].addEventListener("click", scrollLeft(scrollContainer[i]));
-
-  rightArrow[i].addEventListener("click", scrollRight(scrollContainer[i]));
-}
-//
+handleProductCardArrows()
 
 // handle get product from API by id
-
 const handleGetProductFromApiById = async () => {
   arrow.forEach((arrow) => {
     arrow.classList.add("none_elem");
@@ -326,7 +246,7 @@ const handleGetProductFromApiById = async () => {
     const res = await fetch(`https://dummyjson.com/products`);
     const data = await res.json();
     products = data.products;
-    otherProducts();
+    handleOtherProducts(products)
     handleProduct();
     displaySearchedProducts(
       products,
@@ -347,8 +267,6 @@ const handleGetProductFromApiById = async () => {
   }
 };
 handleGetProductFromApiById();
-//
-
 //
 
 //

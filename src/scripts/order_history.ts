@@ -1,50 +1,41 @@
-import "../styles/style.css"
-import "font-awesome/css/font-awesome.css";
-import "../assets/images/logo2.png";
-import "../assets/images/flumello_favicon.png";
-import { storedUserLoginStatus } from "./saveToLocalStorage";
-import { IProduct } from "./IProduct";
-import { displaySearchedProducts } from "./displaySearchFunction";
-import { handleLogout } from "./handleLogoutAndDropdownFunc";
-import { handleDropdownButtonStatus } from "./handleLogoutAndDropdownFunc";
-import { handleCartIcon } from "./handleLogoutAndDropdownFunc";
-// 
-
+import { IProduct } from "./interface/IProduct";
+import { orderHistoryHtmlElems } from "./orderHistory/orderHistoryHtmlElems";
+import { orderHistoryImports } from "./orderHistoryImports";
 
 // 
-const signUpBtnElem = document.querySelector<HTMLLinkElement>(".signup-btn");
-const logInBtnElem = document.querySelector<HTMLElement>(".login-btn");
-const logOutBtnElem = document.querySelector<HTMLElement>(".logout-btn");
-const cartQuantity = document.querySelector<HTMLSpanElement>(".cart-link span");
-const searchBarContainer = document.querySelector<HTMLFormElement>(".search_box");
-const searchBarInputElem = document.querySelector<HTMLInputElement>("#search");
-const searchSectionContainer = document.querySelector<HTMLDivElement>(".searched_item_container");
-const closeSearchIcon = document.querySelector<HTMLElement>(".close_search_icon");
-const searchedItemsContainerElem = document.querySelector<HTMLDivElement>(".search_items");
-const searchErrorMsg = document.querySelector<HTMLDivElement>(".search_error_msg");
-const orderHistoryContainer = document.querySelector<HTMLDivElement>(".orders")
-const clearHistoryElem = document.querySelector<HTMLAnchorElement>("#clear_history")
-const clearHistoryWarningModal = document.querySelector<HTMLDivElement>(".clear_history_modal")
-const clearHistoryBtn = document.querySelector<HTMLAnchorElement>(".clear_modal a")
+
+const {
+  storedUserLoginStatus,
+  displaySearchedProducts,
+  handleLogout,
+  handleDropdownButtonStatus,
+  handleCartIcon
+} = orderHistoryImports
+
 // 
-
-
+const {
+  signUpBtnElem,
+  logInBtnElem,
+  logOutBtnElem,
+  cartQuantity,
+  searchBarContainer,
+  searchBarInputElem,
+  searchSectionContainer,
+  closeSearchIcon,
+  searchedItemsContainerElem,
+  searchErrorMsg,
+  orderHistoryContainer,
+  clearHistoryElem,
+  clearHistoryWarningModal,
+  clearHistoryBtn,
+} = orderHistoryHtmlElems
+// 
 
 // global variables
-let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
 let orderedProducts = JSON.parse(localStorage.getItem("productHistory")) || []
 let getSearchInput: string;
 let products: IProduct[];
-
 // 
-
-
-//
-storedUserLoginStatus === null || storedUserLoginStatus === false
-  ? (window.location.href = "./sign-up.html")
-  : null;
-
-//
 
 // handle cart icon
 handleCartIcon(cartQuantity)
@@ -77,7 +68,6 @@ const handleClosingSearchSection: EventListener = (): void => {
   searchSectionContainer.classList.add("none_elem");
 };
 //
-
 
 
 // handle history when no product is available
@@ -114,8 +104,6 @@ const handleProducts: Function = () =>{
       localStorage.setItem("clickedProductId", JSON.stringify(productId));
     });
   });
-
-  
 }
 handleProducts()
 // 
@@ -127,9 +115,7 @@ const handleClearHistoryWarning:EventListener = (e: Event): void =>{
 }
 const handleClearHistory:EventListener = (e: Event): void =>{
   localStorage.removeItem("productHistory")
-
 }
-
 // 
 
 // getting product from API
@@ -151,10 +137,6 @@ const handleGetProductFromApi = async () => {
   }
 };
 // 
-
-
-
-
 
 // 
 logOutBtnElem.addEventListener("click", handleLogout);

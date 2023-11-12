@@ -14,7 +14,7 @@ export const handleLogout = () => {
 export const handleDropdownButtonStatus = (signUpBtnElem,logInBtnElem) => {
     if (storedUserLoginStatus === true) {
         signUpBtnElem.classList.add("none_elem")
-        logInBtnElem.classList.add("none_elem")
+        logInBtnElem.classList.add("none_elem") 
     } else {
         signUpBtnElem.classList.remove("none_elem")
         logInBtnElem.classList.remove("none_elem")

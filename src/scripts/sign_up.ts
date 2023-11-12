@@ -1,28 +1,26 @@
-import "../styles/style.css";
-import "font-awesome/css/font-awesome.css";
-import "../assets/images/logo2.png";
-import "../assets/images/flumello_favicon.png";
-import { userData } from "./saveToLocalStorage";
+import { signUpHtmlElems } from "./signUp/signUpHtmlElems";
+import { signUpImports } from "./signUpImports";
+import { IUser } from "./interface/IUser";
+import { signUpInputChecks } from "./signUp/signUpInputChecks";
 // 
 
-// 
-const fnameInputElem = document.querySelector<HTMLInputElement>("#fname");
-const lnameInputElem = document.querySelector<HTMLInputElement>("#lname");
-const emailInputElem = document.querySelector<HTMLInputElement>("#email");
-const passwordInputElem = document.querySelector<HTMLInputElement>("#password");
-const signUpButtonElem = document.querySelector<HTMLButtonElement>(".sign-up");
-const errorMsgElem = document.querySelector<HTMLDivElement>(".error-msg");
-const showPasswordIcon = document.querySelector<HTMLElement>("#togglePasswordIcon");
-// 
-
-interface IUser {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-}
+const {
+  fnameInputElem,
+  lnameInputElem,
+  emailInputElem,
+  passwordInputElem,
+  signUpButtonElem,
+  errorMsgElem,
+  showPasswordIcon
+} = signUpHtmlElems
 // 
 
+const {
+  userData
+} = signUpImports
+// 
+
+// Global variables
 let fnameInput: string;
 let lnameInput: string;
 let emailInput: string;
@@ -31,10 +29,6 @@ let regex: RegExp = /^[a-zA-Z0-9_-]+@[a-zA-z0-9-]+\.[a-z]{2,4}$/;
 let passwordRegex: RegExp = /^[a-zA-Z0-9_-]{5,20}$/;
 let user: IUser;
 // 
-
-
-
-
 
 const handleFnameInput: EventListener = (e: Event) => {
     const getFnameInput = e.target as HTMLInputElement;
@@ -61,52 +55,6 @@ const handlePasswordInput: EventListener = (e: Event) => {
 const saveUserToLocalStorage = () => {localStorage.setItem("user", JSON.stringify(user))};
 // 
 
-// input error checks
-const fnameCheck = () => {
-    if(!fnameInputElem.value){
-      fnameInputElem.setAttribute("placeholder", "first name cannot be empty")
-      fnameInputElem.classList.add("error-placeholder")
-      fnameInputElem.classList.add("input-error")
-    }else{
-      fnameInputElem.classList.remove("error-placeholder")
-      fnameInputElem.classList.remove("input-error")
-  
-  }
-};
-const lnameCheck = () => {
-  if(!lnameInputElem.value){
-    lnameInputElem.setAttribute("placeholder", "last name cannot be empty")
-    lnameInputElem.classList.add("error-placeholder")
-    lnameInputElem.classList.add("input-error")
-  }else{
-    lnameInputElem.classList.remove("error-placeholder")
-    lnameInputElem.classList.remove("input-error")
-
-  }
-};
-const emailCheck = () => {
-  if(!regex.test(emailInput)){
-    emailInputElem.setAttribute("placeholder", "email cannot be empty")
-    emailInputElem.classList.add("error-placeholder")
-    emailInputElem.classList.add("input-error")
-  }else{
-    emailInputElem.classList.remove("input-error")
-  }
-};
-const passwordCheck = () => {
-  if(!passwordInputElem.value){
-    passwordInputElem.setAttribute("placeholder", "password cannot be empty")
-    passwordInputElem.classList.add("error-placeholder")
-    passwordInputElem.classList.add("input-error")
-  }else if(!passwordRegex.test(passwordInput)){
-    passwordInputElem.classList.add("input-error")
-  }
-  else{
-    passwordInputElem.classList.remove("input-error")
-  }
-};
-
-// 
 // handle getting or storing new user data in localStorage
 const handleLocalStorage = () => {
   let isUserLoggedIn = false
@@ -125,7 +73,6 @@ const handleLocalStorage = () => {
 }
 // 
 
-
 //password visibility
 const togglePasswordVisibility:EventListener = (e:Event):void =>{
   if (passwordInputElem.type === "password") {
@@ -142,10 +89,9 @@ const togglePasswordVisibility:EventListener = (e:Event):void =>{
 
 // handle user details
 const handleSignUpBtn = () => {
-  fnameCheck()
-  lnameCheck()
-  emailCheck()
-  passwordCheck()
+  signUpInputChecks(emailInput,passwordInput)
+  showPasswordIcon.classList.add("block_elem")
+  
   // 
   if (fnameInputElem.value &&
     lnameInputElem.value &&
@@ -165,20 +111,12 @@ const handleSignUpBtn = () => {
       emailInputElem.value = "";
       passwordInputElem.value = "";
     }
-    
-    
-    console.log(userData());
 };
-// 
+
 // get user data from local storage
 const userAlreadyExisting = JSON.parse(localStorage.getItem("user"))
 // 
 
-
-
-
-
-  
 //
 fnameInputElem?.addEventListener("change", handleFnameInput);
 lnameInputElem?.addEventListener("change", handleLnameInput);

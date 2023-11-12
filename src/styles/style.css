@@ -1649,7 +1649,7 @@
   .error-placeholder::placeholder {
     color: red;
     font-style: italic;
-    text-align: right;
+    text-align: center;
   }
   div.form .input-error {
     border: 1px solid red;
@@ -1696,7 +1696,7 @@
  
   .js_error-placeholder::placeholder {
     font-style: italic;
-    text-align: end;
+    text-align: center;
   }
   
   .js_input-error {

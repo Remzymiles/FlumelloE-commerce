@@ -1,52 +1,35 @@
-import "../styles/style.css"
-import "font-awesome/css/font-awesome.css";
-import "../assets/images/logo2.png";
-import "../assets/images/flumello_favicon.png";
-import { storedUserLoginStatus } from "./saveToLocalStorage";
-import { IProduct } from "./IProduct";
-import { displaySearchedProducts } from "./displaySearchFunction";
-import { handleCartIcon } from "./handleLogoutAndDropdownFunc";
-import { handleLogout } from "./handleLogoutAndDropdownFunc";
-import { handleDropdownButtonStatus } from "./handleLogoutAndDropdownFunc";
+import { cartPageElems } from "./cartPage/cartPageHtmlELems";
+import { cartPageImports } from "./cartPageImports";
+import { cartPageSearchFuncsAndFetchApi } from "./cartPage/cartPageSearchFuncsAndFetchApi";
+import { handleDeleteProductFromCart } from "./cartPage/deleteProductFromCart";
 // 
 
-
 // 
-const signUpBtnElem = document.querySelector<HTMLAnchorElement>(".signup-btn");
-const logInBtnElem = document.querySelector<HTMLElement>(".login-btn");
-const logOutBtnElem = document.querySelector<HTMLElement>(".logout-btn");
-const productsContainerElem = document.querySelector<HTMLDivElement>(".products");
-const cartQuantity = document.querySelector<HTMLSpanElement>(".cart-link span");
-const totalPriceContainer = document.querySelector<HTMLDivElement>(".subtotal")
-const searchBarContainer = document.querySelector<HTMLFormElement>(".search_box");
-const searchBarInputElem = document.querySelector<HTMLInputElement>("#search");
-const searchSectionContainer = document.querySelector<HTMLDivElement>(".searched_item_container");
-const closeSearchIcon = document.querySelector<HTMLElement>(".close_search_icon");
-const searchedItemsContainerElem = document.querySelector<HTMLDivElement>(".search_items");
-const searchErrorMsg = document.querySelector<HTMLDivElement>(".search_error_msg");
-const checkoutBtn = document.querySelector<HTMLButtonElement>(".cart_checkout_btn")
-//
+const {
+  handleCartIcon,
+  handleLogout,
+  handleDropdownButtonStatus
+} = cartPageImports
 
+const {
+  signUpBtnElem,
+    logInBtnElem,
+    logOutBtnElem,
+    productsContainerElem,
+    cartQuantity,
+    totalPriceContainer,
+    checkoutBtn
+} = cartPageElems
+// 
 
 
 // Global variables
-let getSearchInput: string;
-let products: IProduct[];
 let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
 // 
 
-
-
-//
-storedUserLoginStatus === null || storedUserLoginStatus === false
-  ? (window.location.href = "./sign-up.html")
-  : null;
-//
-
-
 // handle cart icon
 handleCartIcon(cartQuantity)
-
+// 
 
 // handle totalPriceContainer if addProductsToCart is empty
 if(addProductsToCart === null){
@@ -54,40 +37,9 @@ if(addProductsToCart === null){
 }
 // 
 
-
 //handle dropdown links
 handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
-
 // 
-
-
-
-// handle search box
-const handleSearchBox: EventListener = (e: Event): void => {
-  e.preventDefault();
-  //
-  getSearchInput
-  ? searchSectionContainer.classList.add("block_elem")
-  : searchSectionContainer.classList.remove("block_elem")
-  // 
-  handleGetProductFromApi();
-};
-//
-
-// get user input
-const handleSearchBoxInput: EventListener = (e: Event): void => {
-  const searchInput = e.target as HTMLInputElement;
-  getSearchInput = searchInput.value;
-};
-//
-
-// close the search section when the x icon is clicked
-const handleClosingSearchSection: EventListener = (): void => {
-  searchSectionContainer.classList.add("none_elem");
-};
-//
-
-
 
 // handle adding products to cart
 const handleAddProductsToCart: Function = () => {
@@ -122,8 +74,6 @@ const plusIcons = document.querySelectorAll<HTMLElement>(".plus_icon")
 const deleteButtons = document.querySelectorAll<HTMLElement>(".delete-product");
 // 
 
-
-
 // event listeners for the minus buttons
 minusIcons.forEach((button, index) => {
   button.addEventListener("click", () => {
@@ -149,27 +99,10 @@ plusIcons.forEach((button, index) => {
 // 
 
 // handle delete button
-deleteButtons.forEach((button, index) => {
-  button.addEventListener("click", () => {
-    addProductsToCart.splice(index, 1);
-
-    localStorage.setItem("addProductsToCart", JSON.stringify(addProductsToCart));
-
-    // handle cart icon
-  cartQuantity.innerHTML = addProductsToCart.length;
-  addProductsToCart.length === 0 ? cartQuantity.classList.add("none_elem"): cartQuantity.classList.remove("none_elem")
-
-    handleAddProductsToCart();
-    calculateTotalPrice();
-  });
-});
+handleDeleteProductFromCart(deleteButtons,addProductsToCart,cartQuantity,handleAddProductsToCart,calculateTotalPrice)
 // 
-
-
-
 }
 // 
-
 
 
 // Calculate total price
@@ -185,7 +118,6 @@ const calculateTotalPrice:Function = () => {
   <p>₦ ${(total * 520).toLocaleString()}</p>`;
 };
 calculateTotalPrice()
-
 handleAddProductsToCart();
 // 
 
@@ -209,36 +141,8 @@ const handleCheckoutBtn:EventListener = (e: Event):void =>{
     localStorage.setItem("checkoutProducts", JSON.stringify(checkoutProducts))
   })
 }
-
-
-
-// 
-// getting product from API
-const handleGetProductFromApi = async () => {
-
-  try {
-    const res = await fetch(`https://dummyjson.com/products`);
-    const data = await res.json();
-    products = data.products;
-
-    displaySearchedProducts(
-      products,
-      searchBarInputElem.value.toLowerCase(),
-      searchedItemsContainerElem,
-      searchErrorMsg
-      );
-  } catch (error) {
-    console.log(error);
-  }
-};
-// 
-
-
-
+cartPageSearchFuncsAndFetchApi()
 
 // 
 logOutBtnElem.addEventListener("click", handleLogout);
-searchBarInputElem.addEventListener("change", handleSearchBoxInput);
-closeSearchIcon.addEventListener("click", handleClosingSearchSection);
-searchBarContainer.addEventListener("submit", handleSearchBox);
 checkoutBtn.addEventListener("click", handleCheckoutBtn)
