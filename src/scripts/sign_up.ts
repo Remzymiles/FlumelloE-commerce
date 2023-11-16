@@ -1,5 +1,5 @@
 import { signUpHtmlElems } from "./signUp/signUpHtmlElems";
-import { signUpImports } from "./signUpImports";
+import { signUpImports } from "./signUp/signUpImports";
 import { IUser } from "./interface/IUser";
 import { signUpInputChecks } from "./signUp/signUpInputChecks";
 // 

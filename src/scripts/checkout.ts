@@ -1,7 +1,9 @@
 import { checkoutHtmlElems } from "./checkoutPage/checkoutPageHtmlElems";
-import { checkoutImports } from "./checkoutImports";
-import { checkoutSearchFuncsAndFetchApi } from "./checkoutPage/checkoutSearchFuncsAndFetchApi";
+import { checkoutImports } from "./checkoutPage/checkoutImports";
+import { IProduct } from "./interface/IProduct";
 import { handlePriceCalculationAndDisplay } from "./checkoutPage/calculateAndShowCheckoutPrice";
+import { searchFuncsAndFetchApi } from "./handleSearchFuncsAndFetchApiForSearch";
+import { handleRedirectIfUserIsNotLoggedIn } from "./utility/redirectIfUserIsNotLoggedIn";
 // 
 
 const {
@@ -21,6 +23,12 @@ const {
   payBtnElem,
   cartQuantity,
   paymentSuccessModal,
+  searchBarContainer,
+  searchBarInputElem,
+  searchSectionContainer,
+  closeSearchIcon,
+  searchedItemsContainerElem,
+  searchErrorMsg,
 } = checkoutHtmlElems
 
 // 
@@ -32,8 +40,22 @@ let getAddressInput: string;
 let getTelephoneInput: string;
 let emailRegex: RegExp = /^[a-zA-Z0-9_-]+@[a-zA-z0-9-]+\.[a-z]{2,4}$/;
 let mobileNumberRegex: RegExp = /^(\+234|0)[789][01]\d{8}$/
+let products: IProduct[]
 // 
 
+// redirect to login page if user isn't logged in
+handleRedirectIfUserIsNotLoggedIn()
+
+// handle search box
+searchFuncsAndFetchApi({
+  products,
+  searchBarContainer,
+  searchBarInputElem,
+  searchSectionContainer,
+  closeSearchIcon,
+  searchedItemsContainerElem,
+  searchErrorMsg,
+})
 
 // handle cart icon
 handleCartIcon(cartQuantity)
@@ -139,7 +161,6 @@ const handlePayBtn: EventListener = (e: Event): void =>{
 }
 
 // getting product from API
-checkoutSearchFuncsAndFetchApi()
 
 // 
 fullnameInputElem.addEventListener("change",handleFullname)

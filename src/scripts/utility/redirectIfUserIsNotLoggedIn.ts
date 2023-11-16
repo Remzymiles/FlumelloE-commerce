@@ -1,4 +1,4 @@
-import { homepageImports } from "../homepageImports";
+import { homepageImports } from "../homepage/homepageImports";
 
 const {
     storedUserLoginStatus,

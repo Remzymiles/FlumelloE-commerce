@@ -1,14 +1,17 @@
 import { productPageHtmlElems } from "./productPageHtmlELems";
+import { IProduct } from "../interface/IProduct";
 
 
 const {
-    otherProductsContainer,
+  loader,
+  arrow,
+  otherProductsContainer
 } = productPageHtmlElems
 
+let products: IProduct[];
 
 
-
-export const handleOtherProducts = (products) =>{
+export const handleOtherProducts = () =>{
     const otherProducts = () => {
         let imageCardHTML = "";
       
@@ -45,5 +48,31 @@ export const handleOtherProducts = (products) =>{
           });
         });
       };
-      otherProducts();
+      // 
+      const handleGetOtherProductsFromApi = async () => {
+        arrow.forEach((arrow) => {
+          arrow.classList.add("none_elem");
+        });
+        loader.forEach((loader) => {
+          loader.classList.add("block_elem");
+        });
+        try {
+          const res = await fetch(`https://dummyjson.com/products`);
+          const data = await res.json();
+          products = data.products;
+          
+          otherProducts();
+      
+          arrow.forEach((arrow) => {
+            arrow.classList.remove("none_elem");
+          });
+          //
+          loader.forEach((loader) => {
+            loader.classList.add("none_elem");
+          });
+        } catch (error) {
+          console.error("An error occurred:", error);
+        }
+      };
+      handleGetOtherProductsFromApi();
 }

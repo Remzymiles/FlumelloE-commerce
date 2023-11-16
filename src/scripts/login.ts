@@ -1,5 +1,5 @@
 import { loginHtmlElems } from "./login/loginHtmlElems";
-import { loginImports } from "./loginImports";
+import { loginImports } from "./login/loginImports";
 
 // 
 const {

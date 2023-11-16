@@ -1061,7 +1061,7 @@
   }
   .active_tab{
     font-weight: 900;
-    color: var(--navy) !important;
+    color: var(--blue) !important;
   }
   /* profile page end */
   /*  */

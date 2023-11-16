@@ -1,1 +1,1 @@
-export const cardWidth = 200
+export const cardWidth: number = 200

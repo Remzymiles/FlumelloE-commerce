@@ -1,6 +1,7 @@
+import { searchFuncsAndFetchApi } from "./handleSearchFuncsAndFetchApiForSearch";
 import { IProduct } from "./interface/IProduct";
-import { profileHtmlElems } from "./profile/profilePageHtmlElems";
-import { profilePageImports } from "./profilePageImports";
+import { profileHtmlElems } from "./profilePage/profilePageHtmlElems";
+import { profilePageImports } from "./profilePage/profilePageImports";
 
 // 
 const {
@@ -24,54 +25,31 @@ const {
 const {
   userData,
   storedUserLoginStatus,
-  displaySearchedProducts,
   handleLogout,
   handleDropdownButtonStatus,
-  handleCartIcon
+  handleCartIcon,
+  handleRedirectIfUserIsNotLoggedIn
 } = profilePageImports
 
 // global variables
-let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
-let getSearchInput: string;
 let products: IProduct[];
 
 // 
 
-
-
-
-// handling logout button
-storedUserLoginStatus === null || storedUserLoginStatus === false
-  ? (window.location.href = "./sign-up.html")
-  : null;
-
+// redirect to login page if user isn't logged in
+handleRedirectIfUserIsNotLoggedIn()
 //
 
 // handle search box
-const handleSearchBox: EventListener = (e: Event): void => {
-  e.preventDefault();
-  //
-  getSearchInput
-  ? searchSectionContainer.classList.add("block_elem")
-  : searchSectionContainer.classList.remove("block_elem")
-  // 
-  handleGetProductFromApi();
-};
-//
-
-// get user input
-const handleSearchBoxInput: EventListener = (e: Event): void => {
-  const searchInput = e.target as HTMLInputElement;
-  getSearchInput = searchInput.value;
-};
-//
-
-// close the search section when the x icon is clicked
-const handleClosingSearchSection: EventListener = (): void => {
-  searchSectionContainer.classList.add("none_elem");
-};
-//
-
+searchFuncsAndFetchApi({
+  products,
+  searchBarContainer,
+  searchBarInputElem,
+  searchSectionContainer,
+  closeSearchIcon,
+  searchedItemsContainerElem,
+  searchErrorMsg,
+})
 
 // getting user details
 const profileName:Function = () => {
@@ -105,28 +83,8 @@ userEmail()
 userAddress()
 userNumber()
 
-// getting product from API
-const handleGetProductFromApi = async () => {
-  
-  try {
-    const res = await fetch(`https://dummyjson.com/products`);
-    const data = await res.json();
-    products = data.products;
-    
-    displaySearchedProducts(
-      products,
-      searchBarInputElem.value.toLowerCase(),
-      searchedItemsContainerElem,
-      searchErrorMsg
-      );
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 // 
 
 // 
 logOutBtnElem.addEventListener("click", handleLogout);
-searchBarInputElem.addEventListener("change", handleSearchBoxInput);
-closeSearchIcon.addEventListener("click", handleClosingSearchSection);
-searchBarContainer.addEventListener("submit", handleSearchBox);

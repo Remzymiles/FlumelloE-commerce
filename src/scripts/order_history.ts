@@ -1,12 +1,13 @@
+import { searchFuncsAndFetchApi } from "./handleSearchFuncsAndFetchApiForSearch";
 import { IProduct } from "./interface/IProduct";
 import { orderHistoryHtmlElems } from "./orderHistory/orderHistoryHtmlElems";
-import { orderHistoryImports } from "./orderHistoryImports";
+import { orderHistoryImports } from "./orderHistory/orderHistoryImports";
+import { handleRedirectIfUserIsNotLoggedIn } from "./utility/redirectIfUserIsNotLoggedIn";
 
 // 
 
 const {
   storedUserLoginStatus,
-  displaySearchedProducts,
   handleLogout,
   handleDropdownButtonStatus,
   handleCartIcon
@@ -33,41 +34,28 @@ const {
 
 // global variables
 let orderedProducts = JSON.parse(localStorage.getItem("productHistory")) || []
-let getSearchInput: string;
 let products: IProduct[];
 // 
 
 // handle cart icon
 handleCartIcon(cartQuantity)
 
+// redirect to login page if user isn't logged in
+handleRedirectIfUserIsNotLoggedIn()
 
-//handle dropdown links
-handleDropdownButtonStatus(signUpBtnElem,logInBtnElem); 
+// handle drop down buttons
+handleDropdownButtonStatus( signUpBtnElem,logInBtnElem,)
 
 // handle search box
-const handleSearchBox: EventListener = (e: Event): void => {
-  e.preventDefault();
-  //
-  getSearchInput
-  ? searchSectionContainer.classList.add("block_elem")
-  : searchSectionContainer.classList.remove("block_elem")
-  // 
-  handleGetProductFromApi();
-};
-//
-
-// get user input
-const handleSearchBoxInput: EventListener = (e: Event): void => {
-  const searchInput = e.target as HTMLInputElement;
-  getSearchInput = searchInput.value;
-};
-//
-
-// close the search section when the x icon is clicked
-const handleClosingSearchSection: EventListener = (): void => {
-  searchSectionContainer.classList.add("none_elem");
-};
-//
+searchFuncsAndFetchApi({
+  products,
+  searchBarContainer,
+  searchBarInputElem,
+  searchSectionContainer,
+  closeSearchIcon,
+  searchedItemsContainerElem,
+  searchErrorMsg,
+})
 
 
 // handle history when no product is available
@@ -118,30 +106,8 @@ const handleClearHistory:EventListener = (e: Event): void =>{
 }
 // 
 
-// getting product from API
-const handleGetProductFromApi = async () => {
-
-  try {
-    const res = await fetch(`https://dummyjson.com/products`);
-    const data = await res.json();
-    products = data.products;
-
-    displaySearchedProducts(
-      products,
-      searchBarInputElem.value.toLowerCase(),
-      searchedItemsContainerElem,
-      searchErrorMsg
-      );
-  } catch (error) {
-    console.log(error);
-  }
-};
-// 
 
 // 
 logOutBtnElem.addEventListener("click", handleLogout);
-searchBarInputElem.addEventListener("change", handleSearchBoxInput);
-closeSearchIcon.addEventListener("click", handleClosingSearchSection);
-searchBarContainer.addEventListener("submit", handleSearchBox);
 clearHistoryElem.addEventListener("click", handleClearHistoryWarning)
 clearHistoryBtn.addEventListener("click", handleClearHistory)

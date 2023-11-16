@@ -1,7 +1,9 @@
 import { cartPageElems } from "./cartPage/cartPageHtmlELems";
-import { cartPageImports } from "./cartPageImports";
-import { cartPageSearchFuncsAndFetchApi } from "./cartPage/cartPageSearchFuncsAndFetchApi";
+import { cartPageImports } from "./cartPage/cartPageImports";
 import { handleDeleteProductFromCart } from "./cartPage/deleteProductFromCart";
+import { searchFuncsAndFetchApi } from "./handleSearchFuncsAndFetchApiForSearch";
+import { handleRedirectIfUserIsNotLoggedIn } from "./utility/redirectIfUserIsNotLoggedIn";
+import { IProduct } from "./interface/IProduct";
 // 
 
 // 
@@ -18,14 +20,35 @@ const {
     productsContainerElem,
     cartQuantity,
     totalPriceContainer,
-    checkoutBtn
+    checkoutBtn,
+    searchBarContainer,
+    searchBarInputElem,
+    searchSectionContainer,
+    closeSearchIcon,
+    searchedItemsContainerElem,
+    searchErrorMsg,
 } = cartPageElems
-// 
+//
+// Global variables
+let products : IProduct[] 
 
+// handle search box
+searchFuncsAndFetchApi({
+  products,
+  searchBarContainer,
+  searchBarInputElem,
+  searchSectionContainer,
+  closeSearchIcon,
+  searchedItemsContainerElem,
+  searchErrorMsg,
+})
 
 // Global variables
 let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
 // 
+
+// redirect to login page if user isn't logged in
+handleRedirectIfUserIsNotLoggedIn()
 
 // handle cart icon
 handleCartIcon(cartQuantity)
@@ -141,7 +164,6 @@ const handleCheckoutBtn:EventListener = (e: Event):void =>{
     localStorage.setItem("checkoutProducts", JSON.stringify(checkoutProducts))
   })
 }
-cartPageSearchFuncsAndFetchApi()
 
 // 
 logOutBtnElem.addEventListener("click", handleLogout);
