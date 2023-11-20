@@ -33,15 +33,8 @@ const {
 let products : IProduct[] 
 
 // handle search box
-searchFuncsAndFetchApi({
-  products,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-})
+searchFuncsAndFetchApi()
+
 
 // Global variables
 let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
@@ -51,7 +44,7 @@ let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) ||
 handleRedirectIfUserIsNotLoggedIn()
 
 // handle cart icon
-handleCartIcon(cartQuantity)
+handleCartIcon()
 // 
 
 // handle totalPriceContainer if addProductsToCart is empty
@@ -61,7 +54,7 @@ if(addProductsToCart === null){
 // 
 
 //handle dropdown links
-handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
+handleDropdownButtonStatus();
 // 
 
 // handle adding products to cart

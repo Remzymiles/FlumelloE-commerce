@@ -25,8 +25,6 @@ let fnameInput: string;
 let lnameInput: string;
 let emailInput: string;
 let passwordInput: string;
-let regex: RegExp = /^[a-zA-Z0-9_-]+@[a-zA-z0-9-]+\.[a-z]{2,4}$/;
-let passwordRegex: RegExp = /^[a-zA-Z0-9_-]{5,20}$/;
 let user: IUser;
 // 
 

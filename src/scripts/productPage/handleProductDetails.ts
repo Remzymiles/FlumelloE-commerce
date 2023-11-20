@@ -84,7 +84,8 @@ export const handleProduct = (product:IProduct) => {
     // 
 
     // handle cart icon
-    handleCartIcon(cartQuantity)
+    handleCartIcon();
+
     
     
     // 
@@ -111,18 +112,20 @@ export const handleProduct = (product:IProduct) => {
           };
     
           addProductsToCart.push(newProduct);
-          handleCartIcon(cartQuantity); 
+          handleCartIcon();
+; 
         
       } else {
         existingProduct.productQuantity = Number(productQuantityInput);
-        handleCartIcon(cartQuantity);
+        handleCartIcon();
       }
     
       // Save the cart to localStorage
       localStorage.setItem("addProductsToCart", JSON.stringify(addProductsToCart));
     
       // Handle cart icon
-      handleCartIcon(cartQuantity); 
+      handleCartIcon();
+; 
     };
 
     // handle products for checkout

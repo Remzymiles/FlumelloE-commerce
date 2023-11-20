@@ -15,23 +15,13 @@ const {
 } = productPageImports
 
 const {
-  signUpBtnElem,
-  logInBtnElem ,
   logOutBtnElem,
-  searchBarInputElem,
-  searchBarContainer,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-  cartQuantity
 } = productPageHtmlElems
 //
 
 //
 
 // Global variables
-let products: IProduct[];
 let product: IProduct;
 //
 
@@ -42,24 +32,17 @@ const productId = Number(clickedProduct);
 //
 
 // handle cart icon
-handleCartIcon(cartQuantity)
+handleCartIcon()
 
 //handle dropdown links
-handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
+handleDropdownButtonStatus();
 
 // redirect to login page if user isn't logged in
 handleRedirectIfUserIsNotLoggedIn()
 
 // handle search box
-searchFuncsAndFetchApi({
-  products,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-})
+searchFuncsAndFetchApi()
+
 
 
 // handle image card arrows

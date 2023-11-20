@@ -47,21 +47,14 @@ let products: IProduct[]
 handleRedirectIfUserIsNotLoggedIn()
 
 // handle search box
-searchFuncsAndFetchApi({
-  products,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-})
+searchFuncsAndFetchApi()
+
 
 // handle cart icon
-handleCartIcon(cartQuantity)
+handleCartIcon()
 
 //handle dropdown links
-handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
+handleDropdownButtonStatus();
 // 
 
 

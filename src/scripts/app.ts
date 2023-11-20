@@ -5,6 +5,8 @@ import { searchFuncsAndFetchApi } from "./handleSearchFuncsAndFetchApiForSearch"
 import { handleRedirectIfUserIsNotLoggedIn } from "./utility/redirectIfUserIsNotLoggedIn";
 import { IProduct } from "./interface/IProduct";
 import { showProducts } from "./homepage/showHomepageProducts";
+import { handleGetAllProductsFromApi
+ } from "./fetchAllProductsFromApi";
 //
 
 // imports
@@ -16,22 +18,7 @@ const {
 
 //getting elements from html
 const {
-  signUpBtnElem,
-  logInBtnElem,
   logOutBtnElem,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-  arrow,
-  productCardsGroupOne,
-  productCardsGroupTwo,
-  productCardsGroupThree,
-  productCardsGroupFour,
-  loader,
-  cartQuantity
 } = homepageElems
 // 
 
@@ -45,22 +32,15 @@ handleRedirectIfUserIsNotLoggedIn()
 handleProductCardArrows()
 
 // handle cart icon
-handleCartIcon(cartQuantity);
+handleCartIcon();
 
 //handle dropdown links
-handleDropdownButtonStatus(signUpBtnElem, logInBtnElem);
+handleDropdownButtonStatus();
+
 //
 
 // handle search box
-searchFuncsAndFetchApi({
-  products,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-})
+searchFuncsAndFetchApi()
 // 
 
 // handle animated slider and its arrows for manual swipe
@@ -109,40 +89,19 @@ document.addEventListener("DOMContentLoaded", function () {
 //
 
 //fetch from api to display all products 
-const handleGetProductFromApi = async () => {
-  arrow.forEach((arrow) => {
-    arrow.classList.add("none_elem");
-  });
-  loader.forEach((loader) => {
-    loader.classList.add("block_elem");
-  });
+const handleAllProducts = async () => {
   try {
-    const res = await fetch(`https://dummyjson.com/products`);
-    const data = await res.json();
-    products = data.products;
-    //
-    showProducts({
-      products,
-      productCardsGroupOne,
-      productCardsGroupTwo,
-      productCardsGroupThree,
-      productCardsGroupFour,
-    });
+    const allProducts = await handleGetAllProductsFromApi();
+      if (allProducts) {
+        products = allProducts;
+        showProducts();
 
-    //
-    arrow.forEach((arrow) => {
-      arrow.classList.remove("none_elem");
-    });
-    //
-    loader.forEach((loader) => {
-      loader.classList.add("none_elem");
-    });
-    //
+      }
   } catch (error) {
     console.log(error);
   }
 };
-handleGetProductFromApi();
+handleAllProducts();
 
 //
 logOutBtnElem.addEventListener("click", handleLogout);

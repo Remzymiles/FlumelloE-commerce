@@ -1,5 +1,7 @@
 import { productPageHtmlElems } from "./productPageHtmlELems";
 import { IProduct } from "../interface/IProduct";
+import { handleGetAllProductsFromApi
+ } from "../fetchAllProductsFromApi";
 
 
 const {
@@ -49,30 +51,26 @@ export const handleOtherProducts = () =>{
         });
       };
       // 
-      const handleGetOtherProductsFromApi = async () => {
-        arrow.forEach((arrow) => {
-          arrow.classList.add("none_elem");
-        });
-        loader.forEach((loader) => {
-          loader.classList.add("block_elem");
-        });
-        try {
-          const res = await fetch(`https://dummyjson.com/products`);
-          const data = await res.json();
-          products = data.products;
-          
-          otherProducts();
+    const handleOtherProducts = async () => {
+      try {
+        const allProducts = await handleGetAllProductsFromApi
+();
+      if (allProducts) {
+        products = allProducts;
+        otherProducts();
       
-          arrow.forEach((arrow) => {
-            arrow.classList.remove("none_elem");
-          });
-          //
-          loader.forEach((loader) => {
-            loader.classList.add("none_elem");
-          });
-        } catch (error) {
-          console.error("An error occurred:", error);
-        }
-      };
-      handleGetOtherProductsFromApi();
+        arrow.forEach((arrow) => {
+          arrow.classList.remove("none_elem");
+        });
+        //
+        loader.forEach((loader) => {
+          loader.classList.add("none_elem");
+        });
+      }
+      } catch (error) {
+        console.log(error);
+        
+      }
+    };
+    handleOtherProducts();
 }

@@ -15,16 +15,7 @@ const {
 
 // 
 const {
-  signUpBtnElem,
-  logInBtnElem,
   logOutBtnElem,
-  cartQuantity,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
   orderHistoryContainer,
   clearHistoryElem,
   clearHistoryWarningModal,
@@ -38,24 +29,17 @@ let products: IProduct[];
 // 
 
 // handle cart icon
-handleCartIcon(cartQuantity)
+handleCartIcon()
 
 // redirect to login page if user isn't logged in
 handleRedirectIfUserIsNotLoggedIn()
 
 // handle drop down buttons
-handleDropdownButtonStatus( signUpBtnElem,logInBtnElem,)
+handleDropdownButtonStatus()
 
 // handle search box
-searchFuncsAndFetchApi({
-  products,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-})
+searchFuncsAndFetchApi()
+
 
 
 // handle history when no product is available

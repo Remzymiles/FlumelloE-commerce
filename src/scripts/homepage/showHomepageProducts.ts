@@ -1,27 +1,38 @@
 import { IProduct } from "../interface/IProduct";
+import { homepageElems } from "./homepageHtmlElems";
+import { handleGetAllProductsFromApi } from "../fetchAllProductsFromApi";
 
-interface IShowProducts {
-    products : IProduct[];
-    productCardsGroupOne:{ innerHTML: string };
-    productCardsGroupTwo:{ innerHTML: string };
-    productCardsGroupThree: { innerHTML: string};
-    productCardsGroupFour:{ innerHTML: string};
-
-}
-
-
-export const showProducts = (
-  {products,
+const {
   productCardsGroupOne,
   productCardsGroupTwo,
   productCardsGroupThree,
-  productCardsGroupFour}:IShowProducts
-) => {
-  const ImageCardsGroupOne = () => {
-    let imageCardHTML = "";
+  productCardsGroupFour,
+  arrow,
+  loader,
+} = homepageElems;
 
-    products.slice(0, 10).forEach((product) => {
-      imageCardHTML += `
+let products: IProduct[];
+
+export const showProducts = async () => {
+  try {
+    const allProducts = await handleGetAllProductsFromApi();
+    if (allProducts) {
+      products = allProducts;
+      showProducts();
+
+      arrow.forEach((arrow) => {
+        arrow.classList.remove("none_elem");
+      });
+      //
+      loader.forEach((loader) => {
+        loader.classList.add("none_elem");
+      });
+
+      const ImageCardsGroupOne = () => {
+        let imageCardHTML = "";
+
+        products.slice(0, 10).forEach((product) => {
+          imageCardHTML += `
             <div class="slide_card">
               <a href="product-page.html" class="click" > 
                 <span class="card_discount_percent">${
@@ -47,26 +58,26 @@ export const showProducts = (
               </a>
             </div>
           `;
-    });
+        });
 
-    productCardsGroupOne.innerHTML = imageCardHTML;
+        productCardsGroupOne.innerHTML = imageCardHTML;
 
-    const productCards = document.querySelectorAll(".click");
-    productCards.forEach((product) => {
-      product.addEventListener("click", () => {
-        const productId = product.querySelector(".product_id").textContent;
-        localStorage.setItem("clickedProductId", JSON.stringify(productId));
-      });
-    });
-  };
-  //{ IProduct } from "../IProduct";
+        const productCards = document.querySelectorAll(".click");
+        productCards.forEach((product) => {
+          product.addEventListener("click", () => {
+            const productId = product.querySelector(".product_id").textContent;
+            localStorage.setItem("clickedProductId", JSON.stringify(productId));
+          });
+        });
+      };
+      //{ IProduct } from "../IProduct";
 
-  //
-  const ImageCardsGroupTwo = () => {
-    let imageCardHTML = "";
+      //
+      const ImageCardsGroupTwo = () => {
+        let imageCardHTML = "";
 
-    products.slice(10, 20).forEach((product) => {
-      imageCardHTML += `
+        products.slice(10, 20).forEach((product) => {
+          imageCardHTML += `
             <div class="slide_card">
               <a href="product-page.html" class= "click">
                 <span class="card_discount_percent" id="groceries">${
@@ -92,26 +103,26 @@ export const showProducts = (
               </a>
             </div>
           `;
-    });
+        });
 
-    productCardsGroupTwo.innerHTML = imageCardHTML;
+        productCardsGroupTwo.innerHTML = imageCardHTML;
 
-    const productCards = document.querySelectorAll(".click");
-    productCards.forEach((product) => {
-      product.addEventListener("click", () => {
-        const productId = product.querySelector(".product_id").textContent;
-        localStorage.setItem("clickedProductId", JSON.stringify(productId));
-      });
-    });
-  };
-  //
+        const productCards = document.querySelectorAll(".click");
+        productCards.forEach((product) => {
+          product.addEventListener("click", () => {
+            const productId = product.querySelector(".product_id").textContent;
+            localStorage.setItem("clickedProductId", JSON.stringify(productId));
+          });
+        });
+      };
+      //
 
-  //
-  const ImageCardsGroupThree = () => {
-    let imageCardHTML = "";
+      //
+      const ImageCardsGroupThree = () => {
+        let imageCardHTML = "";
 
-    products.slice(20, 30).forEach((product) => {
-      imageCardHTML += `
+        products.slice(20, 30).forEach((product) => {
+          imageCardHTML += `
             <div class="slide_card">
               <a href="product-page.html" class= "click">
                 <span class="card_discount_percent" id="gadgets">${
@@ -137,26 +148,26 @@ export const showProducts = (
               </a>
             </div>
           `;
-    });
+        });
 
-    productCardsGroupThree.innerHTML = imageCardHTML;
+        productCardsGroupThree.innerHTML = imageCardHTML;
 
-    const productCards = document.querySelectorAll(".click");
-    productCards.forEach((product) => {
-      product.addEventListener("click", () => {
-        const productId = product.querySelector(".product_id").textContent;
-        localStorage.setItem("clickedProductId", JSON.stringify(productId));
-      });
-    });
-  };
-  //
+        const productCards = document.querySelectorAll(".click");
+        productCards.forEach((product) => {
+          product.addEventListener("click", () => {
+            const productId = product.querySelector(".product_id").textContent;
+            localStorage.setItem("clickedProductId", JSON.stringify(productId));
+          });
+        });
+      };
+      //
 
-  //
-  const ImageCardsGroupFour = () => {
-    let imageCardHTML = "";
+      //
+      const ImageCardsGroupFour = () => {
+        let imageCardHTML = "";
 
-    products.slice(13, 26).forEach((product) => {
-      imageCardHTML += `
+        products.slice(13, 26).forEach((product) => {
+          imageCardHTML += `
             <div class="slide_card">
               <a href="product-page.html" class="click">
                 <span class="card_discount_percent">${
@@ -183,24 +194,29 @@ export const showProducts = (
               </a>
             </div>
           `;
-    });
-    productCardsGroupFour.innerHTML = imageCardHTML;
+        });
+        productCardsGroupFour.innerHTML = imageCardHTML;
 
-    const productCards = document.querySelectorAll<HTMLAnchorElement>(".click");
-    productCards.forEach((product) => {
-      product.addEventListener("click", () => {
-        const productId =
-          product.querySelector<HTMLHeadingElement>(".product_id").textContent;
-        localStorage.setItem("clickedProductId", JSON.stringify(productId));
-      });
-    });
-  };
+        const productCards =
+          document.querySelectorAll<HTMLAnchorElement>(".click");
+        productCards.forEach((product) => {
+          product.addEventListener("click", () => {
+            const productId =
+              product.querySelector<HTMLHeadingElement>(
+                ".product_id"
+              ).textContent;
+            localStorage.setItem("clickedProductId", JSON.stringify(productId));
+          });
+        });
+      };
 
-//   calling the product group functions
-ImageCardsGroupOne()
-ImageCardsGroupTwo()
-ImageCardsGroupThree()
-ImageCardsGroupFour()
-
-
+      //calling the product group functions
+      ImageCardsGroupOne();
+      ImageCardsGroupTwo();
+      ImageCardsGroupThree();
+      ImageCardsGroupFour();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

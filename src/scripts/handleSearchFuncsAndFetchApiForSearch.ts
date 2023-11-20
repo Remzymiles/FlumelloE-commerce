@@ -1,48 +1,57 @@
+import { handleGetAllProductsFromApi} from "./fetchAllProductsFromApi";
+import { homepageElems } from "./homepage/homepageHtmlElems";
 import { IProduct } from "./interface/IProduct";
 import { displaySearchedProducts } from "./utility/displaySearchFunction";
 //
 
-let products: IProduct[];
-
-//
-interface ISearch {
-  products: IProduct[];
-  searchBarContainer: HTMLFormElement;
-  searchBarInputElem: HTMLInputElement;
-  searchSectionContainer: HTMLDivElement;
-  closeSearchIcon: HTMLElement;
-  searchedItemsContainerElem: HTMLDivElement;
-  searchErrorMsg: HTMLParagraphElement;
-}
-
-
-// 
-export const searchFuncsAndFetchApi = ({
-  products,
+const {
   searchBarContainer,
   searchBarInputElem,
   searchSectionContainer,
   closeSearchIcon,
   searchedItemsContainerElem,
   searchErrorMsg,
-}: ISearch) => {
-let getSearchInput: string;
+} = homepageElems
 
-  const handleSearchBox: EventListener = (e: Event): void => {
+let products: IProduct[];
+
+
+// 
+export const searchFuncsAndFetchApi = () => {
+let searchInputValue: string;
+
+  const handleSearchedProductsContainer: EventListener = async (e: Event)=> {
     e.preventDefault();
     //
-    getSearchInput
+    searchInputValue
       ? searchSectionContainer.classList.add("block_elem")
       : searchSectionContainer.classList.remove("block_elem");
     //
-    handleGetProductFromApi();
+
+    try {
+      const allProducts = await handleGetAllProductsFromApi();
+
+      if (allProducts) {
+        products = allProducts;
+  
+        // Display searched products
+        displaySearchedProducts(
+          products,
+          searchBarInputElem.value.toLowerCase(),
+          searchedItemsContainerElem,
+          searchErrorMsg
+        );
+      } 
+    } catch (error) {
+      console.log(error);
+    }
   };
   //
 
   // get user input
   const handleSearchBoxInput: EventListener = (e: Event): void => {
     const searchInput = e.target as HTMLInputElement;
-    getSearchInput = searchInput.value;
+    searchInputValue = searchInput.value;
   };
   //
 
@@ -54,24 +63,6 @@ let getSearchInput: string;
 
   searchBarInputElem.addEventListener("change", handleSearchBoxInput);
   closeSearchIcon.addEventListener("click", handleClosingSearchSection);
-  searchBarContainer.addEventListener("submit", handleSearchBox);
+  searchBarContainer.addEventListener("submit", handleSearchedProductsContainer);
 
-  const handleGetProductFromApi = async () => {
-    try {
-      const res = await fetch(`https://dummyjson.com/products`);
-      const data = await res.json();
-      products = data.products;
-      //
-      displaySearchedProducts(
-        products,
-        searchBarInputElem.value.toLowerCase(),
-        searchedItemsContainerElem,
-        searchErrorMsg
-      );
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  handleGetProductFromApi();
 };

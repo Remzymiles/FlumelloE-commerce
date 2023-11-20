@@ -9,16 +9,7 @@ const {
   userEmailElem,
   userTelElem,
   userAddressElem,
-  signUpBtnElem,
-  logInBtnElem,
   logOutBtnElem,
-  cartQuantity,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg
 } = profileHtmlElems
 // 
 
@@ -41,40 +32,33 @@ handleRedirectIfUserIsNotLoggedIn()
 //
 
 // handle search box
-searchFuncsAndFetchApi({
-  products,
-  searchBarContainer,
-  searchBarInputElem,
-  searchSectionContainer,
-  closeSearchIcon,
-  searchedItemsContainerElem,
-  searchErrorMsg,
-})
+searchFuncsAndFetchApi()
+
 
 // getting user details
 const profileName:Function = () => {
-    acctNameElem.innerText = `${userData().lastName} ${userData().firstName}`
+  acctNameElem.innerText = `${userData().lastName} ${userData().firstName}`
 }
 const userEmail:Function = () => {
-    userEmailElem.innerText = `${userData().email}`
+  userEmailElem.innerText = `${userData().email}`
 }
 const userNumber:Function = () => {
   const getNumberInput = JSON.parse(localStorage.getItem("userTelephone"))
   userTelElem.innerText = `${getNumberInput}`
 }
 const userAddress:Function = () => {
-    const getAddressInput = JSON.parse(localStorage.getItem("userAddress"))
-    userAddressElem.innerText = `${getAddressInput}`
+  const getAddressInput = JSON.parse(localStorage.getItem("userAddress"))
+  userAddressElem.innerText = `${getAddressInput}`
 }
 // 
 
 
 // handle cart icon
-handleCartIcon(cartQuantity)
+handleCartIcon()
 
 
 //handle dropdown links
-handleDropdownButtonStatus(signUpBtnElem,logInBtnElem);
+handleDropdownButtonStatus();
 //
 
 
