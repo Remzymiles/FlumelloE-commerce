@@ -23,5 +23,4 @@ export  const handleGetAllProductsFromApi = async () => {
       console.log(error);
     }
   };
-  handleGetAllProductsFromApi
-();
+  handleGetAllProductsFromApi();
