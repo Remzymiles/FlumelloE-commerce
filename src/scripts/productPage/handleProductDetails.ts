@@ -19,8 +19,8 @@ let productQuantityInput: string
 
 
 // get clicked product from local storage
-const clickedProduct = JSON.parse(localStorage.getItem("clickedProductId"));
-const productId = Number(clickedProduct);
+const clickedProductId = JSON.parse(localStorage.getItem("clickedProductId"));
+const productId = Number(clickedProductId);
 
 
 

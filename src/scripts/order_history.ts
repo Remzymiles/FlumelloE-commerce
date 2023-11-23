@@ -2,6 +2,7 @@ import { searchFuncsAndFetchApi } from "./handleSearchFuncsAndFetchApiForSearch"
 import { IProduct } from "./interface/IProduct";
 import { orderHistoryHtmlElems } from "./orderHistory/orderHistoryHtmlElems";
 import { orderHistoryImports } from "./orderHistory/orderHistoryImports";
+import { handleShowProducts } from "./orderHistory/showProducts";
 import { handleRedirectIfUserIsNotLoggedIn } from "./utility/redirectIfUserIsNotLoggedIn";
 
 // 
@@ -50,34 +51,8 @@ if(orderedProducts.length === 0 || null){
 //
 
 
-// handle products history
-const handleProducts: Function = () =>{
-  orderedProducts.forEach(product =>{
-    orderHistoryContainer.innerHTML += `
-    <div class="order_details">
-      <div class="order_img">
-          <img src="${product.image}" alt="${product.productName}">
-      </div>  
-      <div class="order-text">
-          <h2>${product.productName}</h2>
-          <p>₦ ${(product.productPrice * 520).toLocaleString()}</p>
-          <h6 id ="quantity">Quantity: ${product.productQuantity}</h6>
-          <a href="product-page.html" class="order_history_view_product" id="${product.productId}">View Product</a>
-      </div>
-    </div> <hr>
-    `;
-    
-  })
-  const viewProduct = document.querySelectorAll<HTMLButtonElement>(".order_history_view_product");
-
-  viewProduct.forEach((viewProduct) => {
-    viewProduct.addEventListener("click", () => {
-      const productId = viewProduct.id;
-      localStorage.setItem("clickedProductId", JSON.stringify(productId));
-    });
-  });
-}
-handleProducts()
+// handle show products history
+handleShowProducts()
 // 
 
 // handle clearing of order history
@@ -85,6 +60,7 @@ const handleClearHistoryWarning:EventListener = (e: Event): void =>{
   e.preventDefault()
   clearHistoryWarningModal.classList.add("block_elem")
 }
+// 
 const handleClearHistory:EventListener = (e: Event): void =>{
   localStorage.removeItem("productHistory")
 }

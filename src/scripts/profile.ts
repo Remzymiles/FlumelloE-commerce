@@ -35,7 +35,7 @@ handleRedirectIfUserIsNotLoggedIn()
 searchFuncsAndFetchApi()
 
 
-// getting user details
+// setting user details
 const profileName:Function = () => {
   acctNameElem.innerText = `${userData().lastName} ${userData().firstName}`
 }

@@ -10,7 +10,7 @@ const {
 } = signUpHtmlElems
 
 
-let regex: RegExp = /^[a-zA-Z0-9_-]+@[a-zA-z0-9-]+\.[a-z]{2,4}$/;
+let emailRegex: RegExp = /^[a-zA-Z0-9_-]+@[a-zA-z0-9-]+\.[a-z]{2,4}$/;
 let passwordRegex: RegExp = /^[a-zA-Z0-9_-]{5,20}$/;
 
 
@@ -38,7 +38,7 @@ export const signUpInputChecks = (emailInput,passwordInput) =>{
       }
     };
     const emailCheck = () => {
-      if(!regex.test(emailInput)){
+      if(!emailRegex.test(emailInput)){
         emailInputElem.setAttribute("placeholder", "email cannot be empty")
         emailInputElem.classList.add("error-placeholder")
         emailInputElem.classList.add("input-error")

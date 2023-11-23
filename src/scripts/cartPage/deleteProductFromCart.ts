@@ -1,21 +1,28 @@
+import { cartPageElems } from "./cartPageHtmlELems";
+import { handleShowCartProductAndPrice } from "./showCartProducts";
+import { handleCartIcon } from "../utility/handleLogoutAndDropdownFunc";
+
+const {
+  logOutBtnElem,
+  productsContainerElem,
+  cartQuantity,
+  totalPriceContainer,
+  checkoutBtn,
+} = cartPageElems;
+
+let addProductsToCart = JSON.parse(localStorage.getItem("addProductsToCart")) || [];
 
 
-
-
-
-export const handleDeleteProductFromCart = (deleteButtons,addProductsToCart,cartQuantity,handleAddProductsToCart,calculateTotalPrice) =>{
-    deleteButtons.forEach((button, index) => {
-        button.addEventListener("click", () => {
-          addProductsToCart.splice(index, 1);
+export const handleDeleteProductFromCart = (deleteButtons) =>{
+  deleteButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      addProductsToCart.splice(index, 1);
       
-          localStorage.setItem("addProductsToCart", JSON.stringify(addProductsToCart));
+      localStorage.setItem("addProductsToCart", JSON.stringify(addProductsToCart));
       
+      handleShowCartProductAndPrice()
           // handle cart icon
-        cartQuantity.innerHTML = addProductsToCart.length;
-        addProductsToCart.length === 0 ? cartQuantity.classList.add("none_elem"): cartQuantity.classList.remove("none_elem")
-      
-          handleAddProductsToCart();
-          calculateTotalPrice();
+          handleCartIcon()
         });
       });
 }

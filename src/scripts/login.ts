@@ -17,7 +17,7 @@ const {
 
 let emailInput: string;
 let passwordInput: string;
-let regex: RegExp = /^[a-zA-Z0-9_-]+@[a-zA-z0-9-]+\.[a-z]{2,4}$/;
+let emailRegex: RegExp = /^[a-zA-Z0-9_-]+@[a-zA-z0-9-]+\.[a-z]{2,4}$/;
 // 
 
 
@@ -52,7 +52,7 @@ const togglePasswordVisibility:EventListener = (e:Event):void =>{
 
 // input error handling
 const emailCheck = () => {
-    if (!regex.test(emailInput)) {
+    if (!emailRegex.test(emailInput)) {
         emailInputElem.setAttribute("placeholder", "email cannot be empty");
         emailInputElem.classList.add("js_error-placeholder");
         emailInputElem.classList.add("js_input-error");

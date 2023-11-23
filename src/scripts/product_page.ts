@@ -27,8 +27,7 @@ let product: IProduct;
 
 
 // get clicked product from local storage
-const clickedProduct = JSON.parse(localStorage.getItem("clickedProductId"));
-const productId = Number(clickedProduct);
+const clickedProductId = JSON.parse(localStorage.getItem("clickedProductId")) as Number;
 //
 
 // handle cart icon
@@ -55,7 +54,7 @@ handleOtherProducts()
 // handle get product from API by id
 const handleGetProductFromApiById = async () => {
   try {
-    const res = await fetch(`https://dummyjson.com/products/${productId}`);
+    const res = await fetch(`https://dummyjson.com/products/${clickedProductId}`);
     const data = await res.json();
     product = data;
 

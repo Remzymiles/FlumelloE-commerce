@@ -6,7 +6,7 @@ const {
     loader,
 } = homepageElems
 
-export  const handleGetAllProductsFromApi = async () => {
+export  const handleGetAllProductsFromApi = async (): Promise<IProduct[]> => {
     arrow.forEach((arrow) => {
         arrow.classList.add("none_elem");
       });

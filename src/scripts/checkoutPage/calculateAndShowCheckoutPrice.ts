@@ -8,8 +8,10 @@ const {
   } = checkoutHtmlElems
 // 
 
+let checkoutProducts = JSON.parse(localStorage.getItem("checkoutProducts"))
 
-export const handlePriceCalculationAndDisplay = (checkoutProducts) =>{
+
+export const handlePriceCalculationAndDisplay = () =>{
   const calculateTotalPrice: Function = () =>{
     let newPrice = 0
     let totalCost = 0
