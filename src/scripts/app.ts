@@ -89,7 +89,7 @@ const handleAllProducts = async () => {
     if (allProducts) {
       products = allProducts;
       showProducts();
-    }
+    } 
   } catch (error) {
     console.log(error);
   }
