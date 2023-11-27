@@ -5,31 +5,25 @@ import { searchFuncsAndFetchApi } from "./handleSearchFuncsAndFetchApiForSearch"
 import { handleRedirectIfUserIsNotLoggedIn } from "./utility/redirectIfUserIsNotLoggedIn";
 import { IProduct } from "./interface/IProduct";
 import { showProducts } from "./homepage/showHomepageProducts";
-import { handleGetAllProductsFromApi
- } from "./fetchAllProductsFromApi";
+import { handleGetAllProductsFromApi } from "./fetchAllProductsFromApi";
 //
 
 // imports
-const {
-  handleLogout,
-  handleDropdownButtonStatus,
-  handleCartIcon,
-} = homepageImports
+const { handleLogout, handleDropdownButtonStatus, handleCartIcon } =
+  homepageImports;
 
 //getting elements from html
-const {
-  logOutBtnElem,
-} = homepageElems
-// 
+const { logOutBtnElem } = homepageElems;
+//
 
 // Global variables
 let products: IProduct[];
 
 //handle redirect if user isn't logged in
-handleRedirectIfUserIsNotLoggedIn()
+handleRedirectIfUserIsNotLoggedIn();
 
 // handle main product image card arrows
-handleProductCardArrows()
+handleProductCardArrows();
 
 // handle cart icon
 handleCartIcon();
@@ -40,8 +34,8 @@ handleDropdownButtonStatus();
 //
 
 // handle search box
-searchFuncsAndFetchApi()
-// 
+searchFuncsAndFetchApi();
+//
 
 // handle animated slider and its arrows for manual swipe
 document.addEventListener("DOMContentLoaded", function () {
@@ -82,21 +76,20 @@ document.addEventListener("DOMContentLoaded", function () {
   slider.addEventListener("mouseleave", () => {
     autoSlideInterval = setInterval(nextSlide, 3000);
   });
-    
+
   nextButton.addEventListener("click", nextSlide);
   prevButton.addEventListener("click", prevSlide);
 });
 //
 
-//fetch from api to display all products 
+//fetch from api to display all products
 const handleAllProducts = async () => {
   try {
     const allProducts = await handleGetAllProductsFromApi();
-      if (allProducts) {
-        products = allProducts;
-        showProducts();
-
-      }
+    if (allProducts) {
+      products = allProducts;
+      showProducts();
+    }
   } catch (error) {
     console.log(error);
   }
