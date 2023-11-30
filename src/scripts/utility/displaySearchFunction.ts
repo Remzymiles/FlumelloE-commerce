@@ -21,7 +21,7 @@ export const displaySearchedProducts = (
     let showSearchProducts = "";
 
     matchingProducts.forEach((product) => {
-      const highlightedTitle = highlightMatch(userInput, product.title);
+      const highlightedTitle = highlightMatchingText(userInput, product.title);
 
       showSearchProducts += `
         <a href="product-page.html" class="click">
@@ -54,7 +54,7 @@ export const displaySearchedProducts = (
   }
 };
 
-const highlightMatch = (userInput: string, text: string) => {
+const highlightMatchingText = (userInput: string, text: string) => {
   const regex = new RegExp(`(${userInput})`, 'gi');
   return text.replace(regex, (match) => `<span class="highlight">${match}</span>`);
 };
