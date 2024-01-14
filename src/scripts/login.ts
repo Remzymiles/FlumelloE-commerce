@@ -40,12 +40,12 @@ const handlePasswordInput: EventListener = (e: Event) => {
 const togglePasswordVisibility:EventListener = (e:Event):void =>{
   if (passwordInputElem.type === "password") {
     passwordInputElem.type = "text";
-    showPasswordIcon.classList.remove("fa-eye")
-    showPasswordIcon.classList.add("fa-eye-slash")
+    showPasswordIcon.classList.remove("fa-eye-slash")
+    showPasswordIcon.classList.add("fa-eye")
   } else {
     passwordInputElem.type = "password";
-    showPasswordIcon.classList.add("fa-eye")
-    showPasswordIcon.classList.remove("fa-eye-slash")
+    showPasswordIcon.classList.add("fa-eye-slash")
+    showPasswordIcon.classList.remove("fa-eye")
   }
 }
 // 
